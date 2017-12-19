@@ -8,6 +8,13 @@ body {
     background: #252525;
 }
 
+.controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
 .rxjs-logo {
     animation: rotate 2s infinite linear;
 }

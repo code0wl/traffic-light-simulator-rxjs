@@ -1,19 +1,25 @@
-import ComponentLifeCycle from "../component_lifecycle/component_lifecycle";
+import * as Rx from "rxjs/Rx";
 
-export default class Controls extends ComponentLifeCycle {
-    public pauseBtn: HTMLButtonElement;
-    public playBtn: HTMLButtonElement;
+export default class Controls {
+    public toggle$: Rx.Observable<MouseEvent>;
+    public container: HTMLDivElement;
+    private toggle: HTMLButtonElement;
 
     constructor() {
-        super();
-        this.pauseBtn = document.createElement("button");
-        this.playBtn = document.createElement("button");
-        this.pauseBtn.classList.add("pause");
-        this.playBtn.classList.add("play");
+        this.toggle = document.createElement("button");
+        this.container = document.createElement("div");
+        this.container.classList.add("controls");
+
+        this.render();
+        this.attachEvents();
+    }
+
+    public attachEvents() {
+        this.toggle$ = Rx.Observable.fromEvent(this.toggle, "click");
     }
 
     public render() {
-        document.appendChild(this.pauseBtn);
-        document.appendChild(this.playBtn);
+        this.container.appendChild(this.toggle);
+        document.body.appendChild(this.container);
     }
 }

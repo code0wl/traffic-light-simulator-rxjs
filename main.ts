@@ -1,20 +1,17 @@
 import Canvas from "./src/module/engine/canvas/canvas";
 import {Display, iResolution} from "./src/module/engine/display/display";
 import AnimationLoop from "./src/module/engine/animation/animation_engine";
-import * as Rx from "rxjs";
 import Controls from "./src/module/engine/controls/controls";
 
 class TrafficLightSimulator {
     public canvas: Canvas;
     public cars: number = 12;
     public lights: number = 12;
-    public pause: HTMLButtonElement;
     private resolution: iResolution;
     private controls: Controls;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
-        this.pause = document.querySelector(".pause");
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
         this.controls = new Controls();
         this.startSimulation();
@@ -22,7 +19,7 @@ class TrafficLightSimulator {
 
     private startSimulation() {
         this.animationLoop.animationEngine$
-            .takeUntil(Rx.Observable.fromEvent(this.controls.pause, "click"))
+            .takeUntil(this.controls.toggle$)
             .subscribe(this.render);
     }
 
