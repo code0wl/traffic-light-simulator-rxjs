@@ -1,10 +1,11 @@
-import {testObservable} from "./src/observable";
+import {Canvas} from "./src/module/components/canvas/canvas";
+import {Display} from "./src/module/components/display/display";
 
-class iWork {
+class TrafficLightSimulator {
     constructor() {
-        console.log("I work, whoohoo");
+        const resolution = Display();
+        new Canvas(resolution.width, resolution.height);
     }
 }
 
-new iWork();
-new testObservable();
+new TrafficLightSimulator();
