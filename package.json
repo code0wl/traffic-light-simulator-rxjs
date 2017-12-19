@@ -1,0 +1,35 @@
+{
+  "name": "typescript-rxjs-webpack",
+  "description": "Small generator for rxjs webpack projects",
+  "version": "2.0.2",
+  "homepage": "https://github.com/code0wl/typescript-rxjs-webpack",
+  "author": {
+    "name": "Oz",
+    "email": "o.lodriguez@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/code0wl/typescript-rxjs-webpack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/code0wl/typescript-rxjs-webpack/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10.26",
+    "npm": ">=1.4.3"
+  },
+  "scripts": {
+    "start": " npm i && webpack-dev-server"
+  },
+  "devDependencies": {
+    "@types/rx": "^4.1.1",
+    "ts-loader": "^3.2.0",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  },
+  "dependencies": {
+    "rxjs": "^5.5.5"
+  }
+}
