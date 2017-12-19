@@ -1,4 +1,4 @@
-export class Canvas {
+export default class Canvas {
 
     private canvas: HTMLCanvasElement;
     private context: CanvasRenderingContext2D;
@@ -8,20 +8,20 @@ export class Canvas {
     constructor(width, height) {
         this.width = width;
         this.height = height;
-        this.generateCanvas();
+        this.canvas = document.createElement("canvas");
+        this.context = this.canvas.getContext("2d");
+        this.render();
     }
 
     public getCanvas(): HTMLCanvasElement {
         return this.canvas;
     }
 
-    public getContext(): CanvasRenderingContext2D {
+    get CanvasContext(): CanvasRenderingContext2D {
         return this.context;
     }
 
-    private generateCanvas() {
-        this.canvas = document.createElement("canvas");
-        this.context = this.canvas.getContext("2d");
+    public render() {
         this.canvas.width = this.width;
         this.canvas.height = this.height;
         this.canvas.classList.add("physics-canvas");
