@@ -1,11 +1,10 @@
 import Canvas from "./src/module/engine/canvas/canvas";
 import {Display, iResolution} from "./src/module/engine/display/display";
-import ComponentLifeCycle from "./src/module/engine/component_lifecycle/component_lifecycle";
 import AnimationLoop from "./src/module/engine/canvas/animation_engine";
+import * as Rx from "rxjs";
 
 
-class TrafficLightSimulator extends ComponentLifeCycle {
-
+class TrafficLightSimulator {
     public canvas: Canvas;
     public cars: number;
     public lights: number;
@@ -13,13 +12,14 @@ class TrafficLightSimulator extends ComponentLifeCycle {
     private animationLoop: AnimationLoop;
 
     constructor() {
-        super();
         this.resolution = Display();
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
-    }
-
-    render() {
         this.animationLoop = new AnimationLoop(this.canvas);
+
+        this.animationLoop.animationEngine$
+            .subscribe(() => {
+                console.log("animation engine");
+            });
     }
 }
 
