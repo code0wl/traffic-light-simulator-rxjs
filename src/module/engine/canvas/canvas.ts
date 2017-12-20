@@ -1,7 +1,7 @@
 export default class Canvas {
 
+    public context: CanvasRenderingContext2D;
     private canvas: HTMLCanvasElement;
-    private context: CanvasRenderingContext2D;
     private width: number;
     private height: number;
 
@@ -13,12 +13,10 @@ export default class Canvas {
         this.render();
     }
 
-    public getCanvas(): HTMLCanvasElement {
-        return this.canvas;
-    }
-
-    get CanvasContext(): CanvasRenderingContext2D {
-        return this.context;
+    paint() {
+        this.context.fillStyle = "#238a52";
+        this.context.clearRect(0, 0, this.width, this.height);
+        this.context.fillRect(0, 0, this.width, this.height);
     }
 
     public render() {
@@ -27,4 +25,5 @@ export default class Canvas {
         this.canvas.classList.add("physics-canvas");
         document.body.appendChild(this.canvas);
     }
+
 }
