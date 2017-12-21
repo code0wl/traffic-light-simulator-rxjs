@@ -44,27 +44,22 @@ export default class Road {
         const context = this.context;
         context.fillStyle = this.color;
 
-        console.log(this);
-
         if (this.width < this.height && this.width > 40) {
             context.fillRect(this.x + ((this.width / 2) - 1), this.y, 2, this.height);
-            context.beginPath();
-            context.setLineDash([2, 5]);
+
             context.moveTo(this.x + ((this.width / 4) - 1), this.y);
             context.lineTo(this.x + ((this.width / 4) - 1), (this.y + this.height));
             context.closePath();
             context.strokeStyle = "#A09383";
-            context.lineWidth = 1;
             context.fill();
             context.stroke();
 
             context.beginPath();
-            context.setLineDash([2, 5]);
             context.moveTo(this.x + ((this.width / (4 / 3)) - 1), this.y);
             context.lineTo(this.x + ((this.width / (4 / 3)) - 1), (this.y + this.height));
             context.closePath();
             context.strokeStyle = "#A09383";
-            context.lineWidth = 10;
+            context.lineWidth = 1;
             context.fill();
             context.stroke();
 

@@ -27,6 +27,13 @@ class TrafficLightSimulator {
             width: this.resolution.width,
             height: 80
         });
+
+        new Road(this.canvas.context, {
+            x: ((this.resolution.width / 2) - 40),
+            width: 80,
+            height: this.resolution.height,
+            y: 0,
+        });
     }
 
     private render() {
