@@ -2,7 +2,6 @@ import Canvas from "./src/module/engine/canvas/canvas";
 import {Display, iResolution} from "./src/module/engine/display/display";
 import AnimationLoop from "./src/module/engine/animation/animation_engine";
 import Road from "./src/module/components/road/road";
-import {Roads} from "./src/module/store/store";
 
 class TrafficLightSimulator {
     public canvas: Canvas;
@@ -16,36 +15,21 @@ class TrafficLightSimulator {
             .animationEngine$
             .subscribe(() => {
                 this.render();
+                this.roadStream();
             });
-
-        this.roadStream();
     }
 
+    // turn into stream
     roadStream() {
-        // create road factory
-        var road = new Road(this.canvas.context);
-        road.x = 0;
-        road.y = ((this.resolution.height / 2) - 40);
-        road.width = this.resolution.width;
-        road.height = 80;
-
-        Roads.push(road);
-
-        var road = new Road(this.canvas.context);
-        road.x = 0;
-        road.y = ((this.resolution.height / 2) - 40);
-        road.width = 80;
-        road.height = this.resolution.height;
-
-        Roads.push(road);
-
-        Roads.map(road => {
-            road.render();
-        })
+        new Road(this.canvas.context, {
+            x: 0,
+            y: ((this.resolution.height / 2) - 40),
+            width: this.resolution.width,
+            height: 80
+        });
     }
 
     private render() {
-        this.roadStream();
         this.canvas.paint();
     }
 }

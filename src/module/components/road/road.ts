@@ -1,25 +1,53 @@
-export default class Road {
+import {Attributes} from "./model";
 
-    public x: number = 0;
-    public y: number = 0;
-    public width: number = 0;
-    public height: number = 0;
+export default class Road {
+    readonly width: number;
+    readonly x: number;
+    readonly y: number;
+    readonly height: number;
     private color: string;
 
-    constructor(private context: CanvasRenderingContext2D) {
+    constructor(private context: CanvasRenderingContext2D, attr: Attributes) {
         this.color = "#605A4C";
+        this.width = attr.width;
+        this.height = attr.height;
+        this.x = attr.x;
+        this.y = attr.y;
+        this.render();
+    }
+
+    private createDottedLinesHorizontal() {
+        const context = this.context;
+        context.fillRect(this.x, this.y + ((this.height / 2) - 1), this.width, 2);
+        context.beginPath();
+        context.setLineDash([2, 5]);
+        context.moveTo(this.x, this.y + ((this.height / 4) - 1));
+        context.lineTo((this.x + this.width), this.y + ((this.height / 4) - 1));
+        context.closePath();
+        context.strokeStyle = "#FFFFFF";
+        context.lineWidth = 1;
+        context.fill();
+        context.stroke();
+
+        context.beginPath();
+        context.setLineDash([2, 5]);
+        context.moveTo(this.x, this.y + ((this.height / (4 / 3)) - 1));
+        context.lineTo((this.x + this.width), this.y + ((this.height / (4 / 3)) - 1));
+        context.closePath();
+        context.strokeStyle = "#FFFFFF";
+        context.lineWidth = 1;
+        context.fill();
+        context.stroke();
     }
 
     public render() {
         const context = this.context;
         context.fillStyle = this.color;
 
-        context.fillRect(this.x, this.y, this.width, this.height);
-        context.fillStyle = "#A68B44";
+        console.log(this);
 
         if (this.width < this.height && this.width > 40) {
             context.fillRect(this.x + ((this.width / 2) - 1), this.y, 2, this.height);
-
             context.beginPath();
             context.setLineDash([2, 5]);
             context.moveTo(this.x + ((this.width / 4) - 1), this.y);
@@ -36,7 +64,7 @@ export default class Road {
             context.lineTo(this.x + ((this.width / (4 / 3)) - 1), (this.y + this.height));
             context.closePath();
             context.strokeStyle = "#A09383";
-            context.lineWidth = 1;
+            context.lineWidth = 10;
             context.fill();
             context.stroke();
 
@@ -47,33 +75,13 @@ export default class Road {
 
         }
         else if (this.width > this.height && this.height > 40) {
-            context.fillRect(this.x, this.y + ((this.height / 2) - 1), this.width, 2);
-
-            context.beginPath();
-            context.setLineDash([2, 5]);
-            context.moveTo(this.x, this.y + ((this.height / 4) - 1));
-            context.lineTo((this.x + this.width), this.y + ((this.height / 4) - 1));
-            context.closePath();
-            context.strokeStyle = "#A09383";
-            context.lineWidth = 1;
-            context.fill();
-            context.stroke();
-
-            context.beginPath();
-            context.setLineDash([2, 5]);
-            context.moveTo(this.x, this.y + ((this.height / (4 / 3)) - 1));
-            context.lineTo((this.x + this.width), this.y + ((this.height / (4 / 3)) - 1));
-            context.closePath();
-            context.strokeStyle = "#A09383";
-            context.lineWidth = 1;
-            context.fill();
-            context.stroke();
-
-            context.fillStyle = "#A09383";
-            context.fillRect(this.x, this.y - 10, this.width, 10);
-            context.fillStyle = "#A09383";
-            context.fillRect(this.x, this.y + this.height, this.width, 10);
-
+            context.fillStyle = "#333333";
+            context.fillRect(this.x, this.y - 10, this.width, 90);
+            context.fillStyle = "#c0c0c0";
+            context.fillRect(this.x, this.y - 10, this.width, 5);
+            context.fillStyle = "#c0c0c0";
+            context.fillRect(this.x, this.y + this.height, this.width, 5);
+            this.createDottedLinesHorizontal();
         }
         else if (this.width > this.height && this.height < 41) {
             context.fillRect(this.x, this.y + ((this.height / 2) - 1), this.width, 2);
