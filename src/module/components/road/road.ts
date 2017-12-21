@@ -76,11 +76,14 @@ export default class Road {
         }
         else if (this.width > this.height && this.height > 40) {
             context.fillStyle = "#333333";
-            context.fillRect(this.x, this.y - 10, this.width, 90);
+            context.fillRect(this.x, this.y, this.width, 85);
+
             context.fillStyle = "#c0c0c0";
-            context.fillRect(this.x, this.y - 10, this.width, 5);
+            context.fillRect(this.x, this.y - 5, this.width, 5);
+
             context.fillStyle = "#c0c0c0";
             context.fillRect(this.x, this.y + this.height, this.width, 5);
+
             this.createDottedLinesHorizontal();
         }
         else if (this.width > this.height && this.height < 41) {
