@@ -25,7 +25,8 @@ class TrafficLightSimulator {
             x: 0,
             y: ((this.resolution.height / 2) - 40),
             width: this.resolution.width,
-            height: 80
+            height: 80,
+            type: "horizontal"
         });
 
         new Road(this.canvas.context, {
@@ -33,6 +34,7 @@ class TrafficLightSimulator {
             width: 80,
             height: this.resolution.height,
             y: 0,
+            type: "vertical"
         });
     }
 
