@@ -1,3 +1,3 @@
 export const randomness = () => {
-    // return random of given arr
+    this.colors = ["#F5F5DC", "#7FFFD4", "#A52A2A", "#000000"];
 };

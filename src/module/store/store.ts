@@ -1,5 +1,7 @@
-export const Cars = [];
-export const Roads = [];
-export const Intersections = [];
-export const Colors: Array<string> = ["#F5F5DC", "#7FFFD4", "#A52A2A", "#000000"];
-export const Seats: Array<string> = ["1", "2", "4"];
+import Intersection from "../components/intersection/intersection";
+import Road from "../components/road/road";
+import Car from "../components/car/car";
+
+export const Cars: Array<Car> = [];
+export const Roads: Array<Road> = [];
+export const Intersections: Array<Intersection> = [];
