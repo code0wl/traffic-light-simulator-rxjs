@@ -1,6 +1,4 @@
-import * as Rx from "rxjs";
-
-export interface ICarType {
+export interface iCarType {
     color: string;
     seats: number;
 }

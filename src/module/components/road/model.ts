@@ -1,4 +1,4 @@
-export interface Attributes {
+export interface iRoad {
     x: number;
     y: number;
     width: number;

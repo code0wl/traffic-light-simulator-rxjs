@@ -1,4 +1,4 @@
-import {Attributes} from "./model";
+import {iRoad} from "./model";
 
 export default class Road {
     readonly width: number;
@@ -10,9 +10,7 @@ export default class Road {
     readonly pavementColor: string = "#333333";
     private color: string;
 
-
-    constructor(private context: CanvasRenderingContext2D, attr: Attributes) {
-        this.color = "#605A4C";
+    constructor(private context: CanvasRenderingContext2D, attr: iRoad) {
         this.width = attr.width;
         this.height = attr.height;
         this.type = attr.type;
