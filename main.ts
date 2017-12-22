@@ -3,11 +3,12 @@ import {Display, iResolution} from "./src/module/engine/display/display";
 import AnimationLoop from "./src/module/engine/animation/animation_engine";
 import Road from "./src/module/components/road/road";
 import Intersection from "./src/module/components/intersection/intersection";
-import {Roads, Intersections} from "./src/module/store/store";
 
 class TrafficLightSimulator {
     public canvas: Canvas;
     private resolution: iResolution;
+    private horizontalRoad: Road;
+    private verticalRoad: Road;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
@@ -15,16 +16,16 @@ class TrafficLightSimulator {
 
         this.animationLoop
             .animationEngine$
+            .map(() => this.render())
             .subscribe(() => {
-                this.render();
-                this.roadStream();
-                this.IntersectionStream();
+                this.generateRoads();
+                this.generateIntersection()
             });
     }
 
     // turn into stream
-    private roadStream() {
-        const hRoad = new Road(this.canvas.context, {
+    generateRoads() {
+        this.horizontalRoad = new Road(this.canvas.context, {
             x: 0,
             y: ((this.resolution.height / 2) - 40),
             width: this.resolution.width,
@@ -32,27 +33,24 @@ class TrafficLightSimulator {
             type: "horizontal"
         });
 
-        const vRoad = new Road(this.canvas.context, {
+        this.verticalRoad = new Road(this.canvas.context, {
             x: ((this.resolution.width / 2) - 40),
             width: 80,
             height: this.resolution.height,
             y: 0,
             type: "vertical"
         });
+    };
 
-        Roads.push(vRoad, hRoad);
-    }
-
-    private IntersectionStream() {
-        const intersection = new Intersection(this.canvas.context, {
-            x: ((this.resolution.width / 2) - 40),
-            width: 80,
-            height: this.resolution.height,
-            y: 0,
-            type: "vertical"
+    generateIntersection() {
+        new Intersection(this.canvas.context, {
+            x: this.horizontalRoad.x,
+            y: this.verticalRoad.y,
+            width: this.horizontalRoad.width,
+            height: this.horizontalRoad.height,
+            roadVertical: this.verticalRoad,
+            roadHorizontal: this.horizontalRoad
         });
-
-        Intersections.push(intersection);
     }
 
     private render() {

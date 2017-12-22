@@ -5,7 +5,6 @@ export interface iIntersection {
     y: number;
     width: number;
     height: number;
-    type: string;
     roadVertical: Road;
     roadHorizontal: Road;
 }

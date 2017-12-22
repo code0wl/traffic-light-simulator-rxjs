@@ -1,31 +1,21 @@
 import {iRoad} from "./model";
 
 export default class Road {
-    readonly width: number;
-    readonly x: number;
-    readonly y: number;
-    readonly height: number;
-    readonly type: string;
-    readonly sideWalkColor: string = "#c0c0c0";
-    readonly pavementColor: string = "#333333";
+    private sideWalkColor: string = "#c0c0c0";
+    private pavementColor: string = "#333333";
     private color: string;
 
     constructor(private context: CanvasRenderingContext2D, attr: iRoad) {
-        this.width = attr.width;
-        this.height = attr.height;
-        this.type = attr.type;
-        this.x = attr.x;
-        this.y = attr.y;
-        this.render();
+        this.render(attr);
     }
 
-    private createDottedLinesHorizontal() {
+    private createDottedLinesHorizontal(props) {
         const context = this.context;
-        context.fillRect(this.x, this.y + ((this.height / 2) - 1), this.width, 2);
+        context.fillRect(props.x, props.y + ((props.height / 2) - 1), props.width, 2);
         context.beginPath();
         context.setLineDash([2, 5]);
-        context.moveTo(this.x, this.y + ((this.height / 4) - 1));
-        context.lineTo((this.x + this.width), this.y + ((this.height / 4) - 1));
+        context.moveTo(props.x, props.y + ((props.height / 4) - 1));
+        context.lineTo((props.x + props.width), props.y + ((props.height / 4) - 1));
         context.closePath();
         context.strokeStyle = "#FFFFFF";
         context.lineWidth = 1;
@@ -34,8 +24,8 @@ export default class Road {
 
         context.beginPath();
         context.setLineDash([2, 5]);
-        context.moveTo(this.x, this.y + ((this.height / (4 / 3)) - 1));
-        context.lineTo((this.x + this.width), this.y + ((this.height / (4 / 3)) - 1));
+        context.moveTo(props.x, props.y + ((props.height / (4 / 3)) - 1));
+        context.lineTo((props.x + props.width), props.y + ((props.height / (4 / 3)) - 1));
         context.closePath();
         context.strokeStyle = "#FFFFFF";
         context.lineWidth = 1;
@@ -43,14 +33,14 @@ export default class Road {
         context.stroke();
     }
 
-    private createDottedLinesVertical() {
+    private createDottedLinesVertical(props) {
         const context = this.context;
 
-        context.fillRect(this.x + ((this.width / 2) - 1), this.y, 2, this.height);
+        context.fillRect(props.x + ((props.width / 2) - 1), props.y, 2, props.height);
         context.beginPath();
         context.setLineDash([2, 5]);
-        context.moveTo(this.x + ((this.width / 4) - 1), this.y);
-        context.lineTo(this.x + ((this.width / 4) - 1), (this.y + this.height));
+        context.moveTo(props.x + ((props.width / 4) - 1), props.y);
+        context.lineTo(props.x + ((props.width / 4) - 1), (props.y + props.height));
         context.closePath();
         context.strokeStyle = this.sideWalkColor;
         context.lineWidth = 1;
@@ -59,8 +49,8 @@ export default class Road {
 
         context.beginPath();
         context.setLineDash([2, 5]);
-        context.moveTo(this.x + ((this.width / (4 / 3)) - 1), this.y);
-        context.lineTo(this.x + ((this.width / (4 / 3)) - 1), (this.y + this.height));
+        context.moveTo(props.x + ((props.width / (4 / 3)) - 1), props.y);
+        context.lineTo(props.x + ((props.width / (4 / 3)) - 1), (props.y + props.height));
         context.closePath();
         context.strokeStyle = "#A09383";
         context.lineWidth = 1;
@@ -68,33 +58,33 @@ export default class Road {
         context.stroke();
     }
 
-    public render() {
+    public render(props) {
         const context = this.context;
         context.fillStyle = this.color;
 
-        if (this.type === "vertical") {
+        if (props.type === "vertical") {
             context.fillStyle = this.pavementColor;
-            context.fillRect(this.x, this.y, 85, this.height);
+            context.fillRect(props.x, props.y, 85, props.height);
 
             context.fillStyle = this.sideWalkColor;
-            context.fillRect(this.x - 5, this.y, 5, this.height);
+            context.fillRect(props.x - 5, props.y, 5, props.height);
 
             context.fillStyle = this.sideWalkColor;
-            context.fillRect(this.x + this.width, this.y, 5, this.height);
+            context.fillRect(props.x + props.width, props.y, 5, props.height);
 
-            this.createDottedLinesVertical();
+            this.createDottedLinesVertical(props);
 
         } else {
             context.fillStyle = this.pavementColor;
-            context.fillRect(this.x, this.y, this.width, 85);
+            context.fillRect(props.x, props.y, props.width, 85);
 
             context.fillStyle = this.sideWalkColor;
-            context.fillRect(this.x, this.y - 5, this.width, 5);
+            context.fillRect(props.x, props.y - 5, props.width, 5);
 
             context.fillStyle = this.sideWalkColor;
-            context.fillRect(this.x, this.y + this.height, this.width, 5);
+            context.fillRect(props.x, props.y + props.height, props.width, 5);
 
-            this.createDottedLinesHorizontal();
+            this.createDottedLinesHorizontal(props);
         }
     }
 }
