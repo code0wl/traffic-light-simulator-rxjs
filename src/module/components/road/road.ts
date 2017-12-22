@@ -4,8 +4,10 @@ export default class Road {
     private sideWalkColor: string = "#c0c0c0";
     private pavementColor: string = "#333333";
     private color: string;
+    public attributes: iRoad;
 
     constructor(private context: CanvasRenderingContext2D, attr: iRoad) {
+        this.attributes = attr;
         this.render(attr);
     }
 

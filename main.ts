@@ -44,10 +44,10 @@ class TrafficLightSimulator {
 
     generateIntersection() {
         new Intersection(this.canvas.context, {
-            x: this.horizontalRoad.x,
-            y: this.verticalRoad.y,
-            width: this.horizontalRoad.width,
-            height: this.horizontalRoad.height,
+            x: this.horizontalRoad.attributes.x,
+            y: this.verticalRoad.attributes.y,
+            width: this.horizontalRoad.attributes.width,
+            height: this.horizontalRoad.attributes.height,
             roadVertical: this.verticalRoad,
             roadHorizontal: this.horizontalRoad
         });
