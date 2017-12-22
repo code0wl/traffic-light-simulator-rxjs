@@ -7,8 +7,7 @@ export default class Intersection {
     }
 
     render(props) {
-        const context = this.context;
-        context.fillStyle = props.pavementColor;
-        context.fillRect(props.x - 5, props.y, props.width + 10, props.height);
+        this.context.fillStyle = props.pavementColor;
+        this.context.fillRect(props.x - 5, props.y, props.width + 10, props.height);
     }
 }
