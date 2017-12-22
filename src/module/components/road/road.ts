@@ -1,8 +1,8 @@
 import {iRoad} from "./model";
 
 export default class Road {
-    private sideWalkColor: string = "#c0c0c0";
-    private pavementColor: string = "#333333";
+    public sideWalkColor: string = "#c0c0c0";
+    public pavementColor: string = "#333333";
     private color: string;
     public attributes: iRoad;
 
