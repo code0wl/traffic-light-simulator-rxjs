@@ -3,6 +3,7 @@ import {Display, iResolution} from "./src/module/engine/display/display";
 import AnimationLoop from "./src/module/engine/animation/animation_engine";
 import Road from "./src/module/components/road/road";
 import Intersection from "./src/module/components/intersection/intersection";
+import Car from "./src/module/components/car/car";
 
 class TrafficLightSimulator {
     public canvas: Canvas;
@@ -19,8 +20,14 @@ class TrafficLightSimulator {
             .map(() => this.render())
             .subscribe(() => {
                 this.generateRoads();
-                this.generateIntersection()
+                this.generateIntersection();
+                this.carStream();
             });
+    }
+
+
+    carStream() {
+        new Car(this.canvas.context);
     }
 
     // turn into stream
