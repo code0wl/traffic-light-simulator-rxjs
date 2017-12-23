@@ -61,6 +61,7 @@ export default class Road {
     }
 
     public render(props) {
+        this.context.save();
         const context = this.context;
         context.fillStyle = this.color;
 
@@ -88,5 +89,6 @@ export default class Road {
 
             this.createDottedLinesHorizontal(props);
         }
+        this.context.restore();
     }
 }

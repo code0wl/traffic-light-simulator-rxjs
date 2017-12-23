@@ -1,24 +1,33 @@
 import {iIntersection} from "./model";
-import {TrafficLight} from "../traffic_light/light_light";
+import {TrafficLight} from "../traffic_light/traffic_light";
 import {position} from "../traffic_light/model";
 
 export default class Intersection {
 
+    private attributes: iIntersection;
+
     constructor(private context: CanvasRenderingContext2D, attr: iIntersection) {
-        this.render(attr);
+        this.attributes = attr;
+        this.render();
     }
 
-    renderLights() {
+    renderLights(props) {
         new TrafficLight(this.context, {
-            x: 10,
-            y: 10,
+            x: props.x - 10,
+            y: props.y - 20,
+            type: position.north
+        });
+
+        new TrafficLight(this.context, {
+            x: props.x - 10,
+            y: props.y - 20,
             type: position.north
         });
     }
 
-    render(props) {
-        this.context.fillStyle = props.pavementColor;
-        this.context.fillRect(props.x - 5, props.y, props.width + 10, props.height);
-        this.renderLights();
+    render() {
+        this.context.fillStyle = this.attributes.pavementColor;
+        this.context.fillRect(this.attributes.x - 5, this.attributes.y, this.attributes.width + 10, this.attributes.height);
+        this.renderLights(this.attributes);
     }
 }
