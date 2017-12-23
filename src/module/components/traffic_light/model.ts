@@ -1,10 +1,9 @@
 export interface iLight {
     x: number;
     y: number;
-    type: number;
-    r?: any;
+    position: position
 }
 
 export enum position {
-    north, south, east, west
+    horizontal, vertical
 }

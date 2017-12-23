@@ -13,15 +13,27 @@ export default class Intersection {
 
     renderLights(props) {
         new TrafficLight(this.context, {
-            x: props.x - 10,
+            x: props.x - 9,
             y: props.y - 20,
-            type: position.north
+            position: position.vertical
+        });
+
+        new TrafficLight(this.context, {
+            x: props.x + 75,
+            y: props.y - 65,
+            position: position.vertical
+        });
+
+        new TrafficLight(this.context, {
+            x: props.x + 35,
+            y: props.y + 20,
+            position: position.horizontal
         });
 
         new TrafficLight(this.context, {
             x: props.x - 10,
-            y: props.y - 20,
-            type: position.north
+            y: props.y - 63,
+            position: position.horizontal
         });
     }
 

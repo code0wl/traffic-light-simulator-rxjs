@@ -1,4 +1,4 @@
-import {iLight} from "./model";
+import {iLight, position} from "./model";
 
 export class TrafficLight {
     readonly height: number;
@@ -6,9 +6,16 @@ export class TrafficLight {
     public attributes: iLight;
 
     constructor(private context: CanvasRenderingContext2D, attr: iLight) {
-        this.height = 45;
-        this.width = 3;
         this.attributes = attr;
+
+        if (attr.position === position.vertical) {
+            this.height = 45;
+            this.width = 3;
+        } else {
+            this.height = 3;
+            this.width = 45;
+        }
+
         this.render();
     }
 
@@ -17,7 +24,7 @@ export class TrafficLight {
     }
 
     private generatePole() {
-        this.context.fillStyle = "#FFFFFF";
+        this.context.fillStyle = "#978d5a";
         this.context.fillRect(this.attributes.x + 5, this.attributes.y + 60, this.width, this.height);
     }
 
