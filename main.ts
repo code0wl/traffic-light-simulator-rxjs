@@ -4,7 +4,7 @@ import AnimationLoop from "./src/module/engine/animation/animation_engine";
 import Road from "./src/module/components/road/road";
 import Intersection from "./src/module/components/intersection/intersection";
 import Car from "./src/module/components/car/car";
-import {Cars} from "./src/module/store/store";
+import {Cars, Roads} from "./src/module/store/store";
 
 class TrafficLightSimulator {
     public canvas: Canvas;
@@ -12,11 +12,13 @@ class TrafficLightSimulator {
     private horizontalRoad: Road;
     private verticalRoad: Road;
     private cars: Array<Car>;
+    private roads: Array<Road>;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
         this.cars = Cars;
+        this.roads = Roads;
 
         this.animationLoop
             .animationEngine$
@@ -53,6 +55,8 @@ class TrafficLightSimulator {
             y: 0,
             type: "vertical"
         });
+
+
     };
 
     generateIntersection() {
