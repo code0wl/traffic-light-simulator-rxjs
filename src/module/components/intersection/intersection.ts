@@ -39,7 +39,7 @@ export default class Intersection {
 
     render() {
         this.context.fillStyle = this.attributes.pavementColor;
-        this.context.fillRect(this.attributes.x - 5, this.attributes.y, this.attributes.width + 10, this.attributes.height);
+        this.context.fillRect(this.attributes.x - 6, this.attributes.y, this.attributes.width + 12, this.attributes.height);
         this.renderLights(this.attributes);
     }
 }

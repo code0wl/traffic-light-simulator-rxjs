@@ -27,7 +27,13 @@ class TrafficLightSimulator {
 
 
     carStream() {
-        new Car(this.canvas.context);
+        new Car(this.canvas.context, {
+            type: "horizontal"
+        });
+
+        new Car(this.canvas.context, {
+            type: "vertical"
+        });
     }
 
     // turn into stream

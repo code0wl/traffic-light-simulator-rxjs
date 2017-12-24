@@ -3,12 +3,12 @@ import {iRoad} from "./model";
 export default class Road {
     public sideWalkColor: string = "#c0c0c0";
     public pavementColor: string = "#333333";
-    private color: string;
     public attributes: iRoad;
+    private color: string;
 
     constructor(private context: CanvasRenderingContext2D, attr: iRoad) {
         this.attributes = attr;
-        this.render(attr);
+        this.render(this.attributes);
     }
 
     private createDottedLinesHorizontal(props) {
