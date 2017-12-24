@@ -4,16 +4,19 @@ import AnimationLoop from "./src/module/engine/animation/animation_engine";
 import Road from "./src/module/components/road/road";
 import Intersection from "./src/module/components/intersection/intersection";
 import Car from "./src/module/components/car/car";
+import {Cars} from "./src/module/store/store";
 
 class TrafficLightSimulator {
     public canvas: Canvas;
     private resolution: iResolution;
     private horizontalRoad: Road;
     private verticalRoad: Road;
+    private cars: Array<Car>;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
+        this.cars = Cars;
 
         this.animationLoop
             .animationEngine$
@@ -28,11 +31,8 @@ class TrafficLightSimulator {
 
     carStream() {
         new Car(this.canvas.context, {
+            id: 0,
             type: "horizontal"
-        });
-
-        new Car(this.canvas.context, {
-            type: "vertical"
         });
     }
 
