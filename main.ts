@@ -5,6 +5,7 @@ import Road from "./src/module/components/road/road";
 import Intersection from "./src/module/components/intersection/intersection";
 import Car from "./src/module/components/car/car";
 import {Cars, Roads} from "./src/module/store/store";
+import * as Rx from "rxjs";
 
 class TrafficLightSimulator {
     public canvas: Canvas;
@@ -13,29 +14,41 @@ class TrafficLightSimulator {
     private verticalRoad: Road;
     private cars: Array<Car>;
     private roads: Array<Road>;
+    private totalCars: number = 60;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
         this.cars = Cars;
         this.roads = Roads;
+        this.initiateObservers();
+        this.totalCars = 60;
+    }
 
-        this.animationLoop
+    initiateObservers() {
+
+        const loop$ = this.animationLoop
             .animationEngine$
             .map(() => this.render())
             .subscribe(() => {
                 this.generateRoads();
                 this.generateIntersection();
-                this.carStream();
             });
+
+        const cars$ = Rx.Observable
+            .interval(1000)
+            .take(this.totalCars)
+            .subscribe(() => {
+                this.carStream();
+            })
     }
 
 
     carStream() {
-        new Car(this.canvas.context, {
-            id: 0,
+        Cars.push(new Car(this.canvas.context, {
             type: "horizontal"
-        });
+        }));
+        console.log(Cars)
     }
 
     // turn into stream

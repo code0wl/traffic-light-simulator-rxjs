@@ -7,8 +7,7 @@ export default class Car {
     readonly path: Path;
     readonly id: number;
 
-    constructor(private context: CanvasRenderingContext2D, attributes: { id: number, type: string }) {
-        this.id = attributes.id;
+    constructor(private context: CanvasRenderingContext2D, attributes: {type: string }) {
         this.color = "#8a0051";
         this.width = 40;
         this.height = 15;
