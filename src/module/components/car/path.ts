@@ -20,9 +20,7 @@ export default class Path {
         vertical.subscribe(() => this.setVerticalPath());
     }
 
-
     setHorizontalPath() {
-        console.log('called horizontal')
         this.draw(this.path.eastToWest);
         this.draw(this.path.eastToNorth);
         this.draw(this.path.eastToSouth);
@@ -34,23 +32,18 @@ export default class Path {
 
     private draw(path) {
 
-        // beginPath
         this.context.beginPath();
 
-        // move to the beginning point of this path
         this.context.moveTo(path.points[0].x, path.points[0].y);
 
-        // draw lines to each point on the path
         for (let pt = 1; pt < path.points.length; pt++) {
             const point = path.points[pt];
             this.context.lineTo(point.x, point.y);
         }
 
-        // set the path styles (color & linewidth)
         this.context.strokeStyle = path.stroke;
         this.context.lineWidth = path.lineWidth;
 
-        // stroke this path
         this.context.stroke();
 
     }
