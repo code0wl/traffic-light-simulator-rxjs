@@ -1,30 +1,28 @@
 import * as Rx from "rxjs";
 import {RegisterPaths} from "./model";
+import {Cars} from "../../store/store";
 
 export default class Path {
 
     private path: any = RegisterPaths();
 
-    constructor(private context: CanvasRenderingContext2D, type: string) {
+    constructor(private context: CanvasRenderingContext2D) {
 
-        const vertical$ = Rx.Observable
-            .of(type)
-            .filter(x => x !== "vertical")
-            .map(() => this.setVerticalPath());
+        const direction$ = Rx.Observable
+            .of(Cars)
+            .map((x) => x.length)
+            .partition((x: number) => x % 2 === 0);
 
-        const horizontal$ = Rx.Observable
-            .of(type)
-            .filter(x => x !== "horizontal")
-            .map(() => this.setHorizontalPath());
+        const horizontal = direction$[0];
+        const vertical = direction$[1];
 
-        Rx.Observable
-            .merge(vertical$, horizontal$)
-            .subscribe();
-
+        horizontal.subscribe(x => this.setHorizontalPath());
+        vertical.subscribe(() => this.setVerticalPath());
     }
 
 
     setHorizontalPath() {
+        console.log('called horizontal')
         this.draw(this.path.eastToWest);
         this.draw(this.path.eastToNorth);
         this.draw(this.path.eastToSouth);

@@ -26,7 +26,6 @@ class TrafficLightSimulator {
     }
 
     initiateObservers() {
-
         const loop$ = this.animationLoop
             .animationEngine$
             .map(() => this.render())
@@ -40,15 +39,12 @@ class TrafficLightSimulator {
             .take(this.totalCars)
             .subscribe(() => {
                 this.carStream();
-            })
+            });
     }
 
 
     carStream() {
-        Cars.push(new Car(this.canvas.context, {
-            type: "horizontal"
-        }));
-        console.log(Cars)
+        Cars.push(new Car(this.canvas.context));
     }
 
     // turn into stream

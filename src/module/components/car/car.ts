@@ -5,13 +5,12 @@ export default class Car {
     readonly height: number;
     readonly color: string;
     readonly path: Path;
-    readonly id: number;
 
-    constructor(private context: CanvasRenderingContext2D, attributes: {type: string }) {
+    constructor(private context: CanvasRenderingContext2D) {
         this.color = "#8a0051";
         this.width = 40;
         this.height = 15;
-        this.path = new Path(this.context, attributes.type);
+        this.path = new Path(this.context);
         this.render();
     }
 
@@ -24,7 +23,7 @@ export default class Car {
     }
 
     render() {
-        console.log('rendering')
+        console.log('rendering car');
         this.context.fillStyle = this.color;
         this.context.fillRect(0, 0, this.width, this.height);
     }
