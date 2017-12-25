@@ -4,7 +4,7 @@ import AnimationLoop from "./src/module/engine/animation/animation_engine";
 import Road from "./src/module/components/road/road";
 import Intersection from "./src/module/components/intersection/intersection";
 import Car from "./src/module/components/car/car";
-import {Cars, Roads} from "./src/module/store/store";
+import {Cars} from "./src/module/store/store";
 import * as Rx from "rxjs";
 
 class TrafficLightSimulator {
@@ -13,27 +13,22 @@ class TrafficLightSimulator {
     private horizontalRoad: Road;
     private verticalRoad: Road;
     private cars: Array<Car>;
-    private roads: Array<Road>;
     private totalCars: number = 60;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
         this.cars = Cars;
-        this.roads = Roads;
         this.totalCars = 60;
         this.initiateObservers();
         this.render();
     }
 
     initiateObservers() {
-
         const cars$ = Rx.Observable
-            .interval(1000)
+            .interval(500)
             .take(this.totalCars)
-            .map(() => {
-                this.carStream();
-            });
+            .map(this.carStream);
 
         this.animationLoop
             .animationEngine$
@@ -42,10 +37,10 @@ class TrafficLightSimulator {
     }
 
 
-    carStream() {
+    carStream = () => {
         const car = new Car(this.canvas.context);
         Cars.push(car);
-    }
+    };
 
     // turn into stream
     generateRoads() {
