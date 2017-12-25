@@ -37,15 +37,12 @@ class TrafficLightSimulator {
 
         this.animationLoop
             .animationEngine$
-            .concatMapTo(cars$)
-            .subscribe(() => {
-
-            })
+            .combineLatest(cars$)
+            .subscribe(this.animate)
     }
 
 
     carStream() {
-        console.log('test')
         const car = new Car(this.canvas.context);
         Cars.push(car);
     }
@@ -86,6 +83,7 @@ class TrafficLightSimulator {
     }
 
     private animate() {
+        console.log('animation engine')
     }
 }
 
