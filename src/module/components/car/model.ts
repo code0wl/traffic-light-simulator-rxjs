@@ -1,11 +1,5 @@
 import {Display} from "../../engine/display/display";
 
-export interface Path {
-    lineWidth: number,
-    stroke: string,
-    points: Array<Object>
-}
-
 const windowWidth = Display().width;
 const windowHeight = Display().height;
 

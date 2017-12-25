@@ -23,8 +23,9 @@ export default class Car {
     }
 
     render() {
-        console.log('rendering car');
+        this.context.restore();
         this.context.fillStyle = this.color;
         this.context.fillRect(0, 0, this.width, this.height);
+        this.context.save();
     }
 }

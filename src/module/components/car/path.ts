@@ -31,7 +31,7 @@ export default class Path {
     }
 
     private draw(path) {
-
+        this.context.save();
         this.context.beginPath();
 
         this.context.moveTo(path.points[0].x, path.points[0].y);
@@ -45,6 +45,6 @@ export default class Path {
         this.context.lineWidth = path.lineWidth;
 
         this.context.stroke();
-
+        this.context.restore();
     }
 }

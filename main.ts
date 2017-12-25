@@ -21,30 +21,33 @@ class TrafficLightSimulator {
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
         this.cars = Cars;
         this.roads = Roads;
-        this.initiateObservers();
         this.totalCars = 60;
+        this.initiateObservers();
+        this.render();
     }
 
     initiateObservers() {
-        const loop$ = this.animationLoop
-            .animationEngine$
-            .map(() => this.render())
-            .subscribe(() => {
-                this.generateRoads();
-                this.generateIntersection();
-            });
 
         const cars$ = Rx.Observable
             .interval(1000)
             .take(this.totalCars)
-            .subscribe(() => {
+            .map(() => {
                 this.carStream();
             });
+
+        this.animationLoop
+            .animationEngine$
+            .concatMapTo(cars$)
+            .subscribe(() => {
+
+            })
     }
 
 
     carStream() {
-        Cars.push(new Car(this.canvas.context));
+        console.log('test')
+        const car = new Car(this.canvas.context);
+        Cars.push(car);
     }
 
     // turn into stream
@@ -64,8 +67,6 @@ class TrafficLightSimulator {
             y: 0,
             type: "vertical"
         });
-
-
     };
 
     generateIntersection() {
@@ -80,7 +81,11 @@ class TrafficLightSimulator {
     }
 
     private render() {
-        this.canvas.paint();
+        this.generateRoads();
+        this.generateIntersection();
+    }
+
+    private animate() {
     }
 }
 

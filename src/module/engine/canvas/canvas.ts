@@ -10,18 +10,15 @@ export default class Canvas {
         this.height = height;
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
-        this.render();
-    }
 
-    paint() {
-        this.context.fillStyle = "#238a52";
-        this.context.clearRect(0, 0, this.width, this.height);
-        this.context.fillRect(0, 0, this.width, this.height);
+        this.render();
     }
 
     public render() {
         this.canvas.width = this.width;
         this.canvas.height = this.height;
+        this.context.fillStyle = "#238a52";
+        this.context.fillRect(0, 0, this.width, this.height);
         this.canvas.classList.add("physics-canvas");
         document.body.appendChild(this.canvas);
     }
