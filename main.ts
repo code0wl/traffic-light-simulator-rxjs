@@ -14,19 +14,19 @@ class TrafficLightSimulator {
     private verticalRoad: Road;
     private cars: Array<Car>;
     private totalCars: number = 60;
+    private populateRate: number = 500;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
         this.cars = Cars;
-        this.totalCars = 60;
         this.initiateObservers();
         this.render();
     }
 
     initiateObservers() {
         const cars$ = Rx.Observable
-            .interval(500)
+            .interval(this.populateRate)
             .take(this.totalCars)
             .map(this.carStream);
 
@@ -35,7 +35,6 @@ class TrafficLightSimulator {
             .combineLatest(cars$)
             .subscribe(this.animate)
     }
-
 
     carStream = () => {
         const car = new Car(this.canvas.context);
