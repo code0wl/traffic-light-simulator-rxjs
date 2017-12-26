@@ -3,13 +3,13 @@ import {Paths} from "../../store/store";
 
 export default class Path {
 
-    private lineWidth: number = 1;
+    private lineWidth: number = 2;
     public paths: any;
 
     constructor(private context: CanvasRenderingContext2D) {
         const paths = Object.keys(allowedPaths());
         this.paths = paths.map(p => {
-            const path = allowedPaths()[p];
+            const path = Object.assign(allowedPaths()[p], this);
             Paths.push(path);
         });
     }

@@ -4,16 +4,16 @@ import AnimationLoop from "./src/module/engine/animation/animation_engine";
 import Road from "./src/module/components/road/road";
 import Intersection from "./src/module/components/intersection/intersection";
 import Car from "./src/module/components/car/car";
-import {Cars, Intersections, Roads, Paths} from "./src/module/store/store";
+import {Cars, Intersections, Paths, Roads} from "./src/module/store/store";
 import * as Rx from "rxjs";
 import Path from "./src/module/components/road/path";
 
 class TrafficLightSimulator {
-    public canvas: Canvas;
+    private canvas: Canvas;
     private resolution: iResolution;
     private horizontalRoad: Road;
     private verticalRoad: Road;
-    private totalCars: number = 60;
+    private totalCars: number = 1;
     private populateRate: number = 500;
     private paths: any;
 
@@ -78,24 +78,22 @@ class TrafficLightSimulator {
     private animate = () => {
         this.canvas.render();
 
-        // render Roads
         Roads.map(road => {
             road.render();
+        });
+
+        Intersections.map((intersection) => {
+            intersection.render();
         });
 
         Paths.map((path) => {
             this.paths.render(path);
         });
 
-        // render cars
         Cars.map((car) => {
             car.render();
         });
 
-        // render intersections
-        Intersections.map((intersection) => {
-            intersection.render();
-        });
     }
 }
 

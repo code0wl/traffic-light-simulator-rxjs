@@ -1,17 +1,15 @@
 export default class Canvas {
 
     public context: CanvasRenderingContext2D;
+    public width: number;
+    public height: number;
     private canvas: HTMLCanvasElement;
-    private width: number;
-    private height: number;
 
     constructor(width, height) {
         this.width = width;
         this.height = height;
         this.canvas = document.createElement("canvas");
         this.context = this.canvas.getContext("2d");
-
-        this.render();
     }
 
     public render() {
