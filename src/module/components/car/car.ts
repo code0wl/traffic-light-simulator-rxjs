@@ -1,19 +1,19 @@
-import Path from "./path";
+import {Cars} from "../../store/store";
 
 export default class Car {
     readonly width: number;
     readonly height: number;
     readonly color: string;
-    readonly path: Path;
 
     constructor(private context: CanvasRenderingContext2D) {
         this.color = "#8a0051";
         this.width = 40;
         this.height = 15;
-        this.path = new Path(this.context);
         this.render();
+        Cars.push(this);
     }
 
+    // animate car
     getLineXYatPercent(startPt, endPt, percent) {
         const dx = endPt.x - startPt.x;
         const dy = endPt.y - startPt.y;
@@ -23,9 +23,7 @@ export default class Car {
     }
 
     render() {
-        this.context.restore();
         this.context.fillStyle = this.color;
         this.context.fillRect(0, 0, this.width, this.height);
-        this.context.save();
     }
 }
