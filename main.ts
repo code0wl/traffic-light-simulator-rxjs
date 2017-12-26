@@ -4,7 +4,7 @@ import AnimationLoop from "./src/module/engine/animation/animation_engine";
 import Road from "./src/module/components/road/road";
 import Intersection from "./src/module/components/intersection/intersection";
 import Car from "./src/module/components/car/car";
-import {Cars} from "./src/module/store/store";
+import {Cars, Intersections, Roads, Paths} from "./src/module/store/store";
 import * as Rx from "rxjs";
 import Path from "./src/module/components/road/path";
 
@@ -13,17 +13,17 @@ class TrafficLightSimulator {
     private resolution: iResolution;
     private horizontalRoad: Road;
     private verticalRoad: Road;
-    private cars: Array<Car>;
     private totalCars: number = 60;
     private populateRate: number = 500;
+    private paths: any;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
-        this.cars = Cars;
-        this.initiateObservers();
-        this.render();
+        this.generateRoads();
         this.assignPaths();
+        this.generateIntersection();
+        this.initiateObservers();
     }
 
     initiateObservers() {
@@ -43,7 +43,7 @@ class TrafficLightSimulator {
     };
 
     assignPaths() {
-        new Path(this.canvas.context);
+        this.paths = new Path(this.canvas.context);
     }
 
     generateRoads() {
@@ -62,7 +62,7 @@ class TrafficLightSimulator {
             y: 0,
             type: "vertical"
         });
-    };
+    }
 
     generateIntersection() {
         new Intersection(this.canvas.context, {
@@ -75,13 +75,27 @@ class TrafficLightSimulator {
         });
     }
 
-    private render() {
-        this.generateRoads();
-        this.generateIntersection();
-    }
+    private animate = () => {
+        this.canvas.render();
 
-    private animate() {
-        console.log('animation engine')
+        // render Roads
+        Roads.map(road => {
+            road.render();
+        });
+
+        Paths.map((path) => {
+            this.paths.render(path);
+        });
+
+        // render cars
+        Cars.map((car) => {
+            car.render();
+        });
+
+        // render intersections
+        Intersections.map((intersection) => {
+            intersection.render();
+        });
     }
 }
 

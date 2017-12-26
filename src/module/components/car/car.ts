@@ -1,29 +1,29 @@
-import {Cars} from "../../store/store";
+import {Cars, Paths} from "../../store/store";
+import {iPath} from "../road/model";
 
 export default class Car {
     readonly width: number;
     readonly height: number;
     readonly color: string;
+    private path: iPath;
 
     constructor(private context: CanvasRenderingContext2D) {
+        this.assignPath();
         this.color = "#8a0051";
         this.width = 40;
         this.height = 15;
-        this.render();
+        this.context.fillStyle = this.color;
         Cars.push(this);
     }
 
-    // animate car
-    getLineXYatPercent(startPt, endPt, percent) {
-        const dx = endPt.x - startPt.x;
-        const dy = endPt.y - startPt.y;
-        const px = startPt.x + dx * percent;
-        const py = startPt.y + dy * percent;
-        return {px, py};
+    assignPath() {
+        this.path = Paths[Math.floor(Math.random() * Paths.length)];
     }
 
     render() {
-        this.context.fillStyle = this.color;
-        this.context.fillRect(0, 0, this.width, this.height);
+        Cars.map((car, index) => {
+            this.context.clearRect(10, index, this.width, this.height);
+            this.context.fillRect(10, index, this.width, this.height);
+        });
     }
 }

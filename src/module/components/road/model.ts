@@ -8,6 +8,11 @@ export interface iRoad {
     type: string;
 }
 
+export interface iPath {
+    stroke: string;
+    points: Array<Object>
+}
+
 export const allowedPaths = () => {
 
     const eastToWest = {

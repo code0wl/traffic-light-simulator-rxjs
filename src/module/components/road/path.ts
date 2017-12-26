@@ -4,17 +4,17 @@ import {Paths} from "../../store/store";
 export default class Path {
 
     private lineWidth: number = 1;
+    public paths: any;
 
     constructor(private context: CanvasRenderingContext2D) {
         const paths = Object.keys(allowedPaths());
-        paths.map(path => {
-            const p = allowedPaths()[path];
-            Paths.push(p);
-            this.draw(p);
+        this.paths = paths.map(p => {
+            const path = allowedPaths()[p];
+            Paths.push(path);
         });
     }
 
-    private draw(path) {
+    public render(path) {
         this.context.beginPath();
 
         this.context.moveTo(path.points[0].x, path.points[0].y);

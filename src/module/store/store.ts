@@ -1,4 +1,4 @@
-import Car from "../components/car/car";
-
-export const Cars: Array<Car> = [];
-export const Paths: Array<Car> = [];
+export const Cars: Array<any> = [];
+export const Roads: Array<any> = [];
+export const Paths: Array<any> = [];
+export const Intersections: Array<any> = [];
