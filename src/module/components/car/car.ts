@@ -1,11 +1,11 @@
 import {Cars, Paths} from "../../store/store";
-import {iPath} from "../road/model";
+import Path from "../road/path";
 
 export default class Car {
     readonly width: number;
     readonly height: number;
     readonly color: string;
-    private path: iPath;
+    private path: Path;
 
     constructor(private context: CanvasRenderingContext2D) {
         this.assignPath();
