@@ -15,7 +15,7 @@ export default class Car {
     constructor(private context: CanvasRenderingContext2D) {
         this.path = Paths[Math.floor(Math.random() * Paths.length)];
         this.startX = this.path.points[0].x;
-        this.startX = this.path.points[0].y;
+        this.startY = this.path.points[0].y;
         this.endX = this.path.points[1].x;
         this.endY = this.path.points[1].y;
         this.color = "#8a0051";
@@ -36,6 +36,6 @@ export default class Car {
 
     render() {
         this.currentFrame
-            .next({x: this.endX, y: this.endY});
+            .next({x: this.endX++, y: this.endY});
     }
 }

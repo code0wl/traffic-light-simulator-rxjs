@@ -30,7 +30,7 @@ class TrafficLightSimulator {
         const cars$ = Rx.Observable
             .interval(this.populateRate)
             .take(this.totalCars)
-            .map(this.carStream)
+            .map(this.carStream);
 
         this.animationLoop
             .animationEngine$
