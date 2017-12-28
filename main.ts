@@ -13,7 +13,7 @@ class TrafficLightSimulator {
     private resolution: iResolution;
     private horizontalRoad: Road;
     private verticalRoad: Road;
-    private totalCars: number = 1;
+    private totalCars: number = 10;
     private populateRate: number = 500;
     private paths: any;
 
@@ -30,11 +30,11 @@ class TrafficLightSimulator {
         const cars$ = Rx.Observable
             .interval(this.populateRate)
             .take(this.totalCars)
-            .map(this.carStream);
+            .map(this.carStream)
 
         this.animationLoop
             .animationEngine$
-            .combineLatest(cars$)
+            .merge(cars$)
             .subscribe(this.animate)
     }
 
@@ -93,7 +93,6 @@ class TrafficLightSimulator {
         Cars.map((car) => {
             car.render();
         });
-
     }
 }
 

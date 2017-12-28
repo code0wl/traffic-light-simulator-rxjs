@@ -43,23 +43,3 @@ export const allowedPaths = () => {
     }
 
 };
-
-// convert to scan when works
-export let x;
-export let y;
-
-export const animatePath = (coors) => {
-    // get starting point
-    const start = coors[0];
-    const end = coors[1];
-
-    return coors.map((coor) => {
-        if (end.x) {
-            x = end.x--;
-        }
-
-        if (end.y) {
-            y = end.y--;
-        }
-    });
-};
