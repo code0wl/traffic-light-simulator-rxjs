@@ -39,7 +39,7 @@ export default class Car {
             })
             .subscribe((coors) => {
                 this.context.fillStyle = this.color;
-                this.context.fillRect(coors.x, coors.y - 20, this.width, this.height);
+                this.context.fillRect(coors.x, coors.y, this.width, this.height);
             });
     }
 

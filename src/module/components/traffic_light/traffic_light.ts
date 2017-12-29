@@ -19,10 +19,6 @@ export class TrafficLight {
         this.render();
     }
 
-    private generateLights() {
-
-    }
-
     private generatePole() {
         this.context.fillStyle = "#978d5a";
         this.context.fillRect(this.attributes.x + 5, this.attributes.y + 60, this.width, this.height);
@@ -31,7 +27,6 @@ export class TrafficLight {
     render() {
         this.context.save();
         this.generatePole();
-        this.generateLights();
         this.context.restore();
     }
 
