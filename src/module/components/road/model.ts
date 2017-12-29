@@ -9,12 +9,19 @@ export interface iRoad {
 }
 
 export const allowedPaths = () => {
-
     const eastToWest = {
         stroke: "blue",
         points: [
-            {x: 0, y: Display().height / 2 - 10},
-            {x: Display().width, y: Display().height / 2 - 10}
+            {x: Display().width, y: Display().height / 2 - 10},
+            {x: 0, y: Display().height / 2 - 10}
+        ]
+    };
+
+    const westToEast = {
+        stroke: "yellow",
+        points: [
+            {x: 0, y: Display().height / 2 + 10},
+            {x: Display().width, y: Display().height / 2 + 10}
         ]
     };
 
@@ -39,7 +46,7 @@ export const allowedPaths = () => {
     return {
         eastToWest,
         eastToNorth,
-        eastToSouth
+        eastToSouth,
+        westToEast
     }
-
 };

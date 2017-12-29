@@ -13,7 +13,7 @@ class TrafficLightSimulator {
     private resolution: iResolution;
     private horizontalRoad: Road;
     private verticalRoad: Road;
-    private totalCars: number = 10;
+    private totalCars: number = 1;
     private populateRate: number = 500;
     private paths: any;
 

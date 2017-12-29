@@ -10,7 +10,8 @@ export default class Car {
     private endX: number;
     private endY: number;
     private startY: number;
-    private currentFrame: Rx.BehaviorSubject<{ x: number, y: number }>;
+    private percent: number = 0;
+    private currentFrame: Rx.BehaviorSubject<{ percent: number }>;
 
     constructor(private context: CanvasRenderingContext2D) {
         this.path = Paths[Math.floor(Math.random() * Paths.length)];
@@ -21,21 +22,29 @@ export default class Car {
         this.color = "#8a0051";
         this.width = 40;
         this.height = 15;
-        this.currentFrame = new Rx.BehaviorSubject({x: this.startX, y: this.startY});
+        this.currentFrame = new Rx.BehaviorSubject({percent: this.percent});
         this.initSubscriptions();
         Cars.push(this);
+        console.log(this.path)
     }
 
     initSubscriptions() {
         this.currentFrame
+            .scan((acc: any, next) => {
+                const dx = this.endX - this.startX;
+                const dy = this.endY - this.startY;
+                const x = this.startX + dx * next.percent;
+                const y = this.startY + dy * next.percent;
+                return {x, y};
+            })
             .subscribe((coors) => {
                 this.context.fillStyle = this.color;
-                this.context.fillRect(coors.x, coors.y, this.width, this.height);
+                this.context.fillRect(coors.x, coors.y - 20, this.width, this.height);
             });
     }
 
     render() {
         this.currentFrame
-            .next({x: this.endX++, y: this.endY});
+            .next({percent: this.percent += .005});
     }
 }
