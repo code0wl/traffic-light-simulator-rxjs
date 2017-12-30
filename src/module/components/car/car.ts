@@ -39,13 +39,11 @@ export default class Car {
             })
             .subscribe((coors) => {
                 this.context.fillStyle = this.color;
-                this.context.save();
                 if (this.path.type === "vertical") {
-                    this.context.translate(coors.x + this.width / 2, coors.y + this.width / 2);
-                    this.context.rotate(Math.PI / 2);
+                    this.context.fillRect(coors.x - (this.height / 2), coors.y, this.height, this.width);
+                } else {
+                    this.context.fillRect(coors.x, coors.y - (this.height / 2), this.width, this.height);
                 }
-                this.context.fillRect(coors.x, coors.y - (this.height / 2), this.width, this.height);
-                this.context.restore();
             });
     }
 

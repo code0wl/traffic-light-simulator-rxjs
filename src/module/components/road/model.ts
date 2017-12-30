@@ -13,8 +13,8 @@ export const allowedPaths = () => {
         type: "horizontal",
         stroke: "blue",
         points: [
-            {x: Display().width, y: Display().height / 2 - 10},
-            {x: 0, y: Display().height / 2 - 10}
+            {x: Display().width, y: Display().height / 2 - 30},
+            {x: 0, y: Display().height / 2 - 30}
         ]
     };
 
@@ -22,8 +22,8 @@ export const allowedPaths = () => {
         type: "horizontal",
         stroke: "yellow",
         points: [
-            {x: 0, y: Display().height / 2 + 10},
-            {x: Display().width, y: Display().height / 2 + 10}
+            {x: 0, y: Display().height / 2 - 10},
+            {x: Display().width, y: Display().height / 2 - 10}
         ]
     };
 
@@ -31,8 +31,8 @@ export const allowedPaths = () => {
         type: "vertical",
         stroke: "red",
         points: [
-            {x: Display().width / 2 + 30, y: Display().height},
-            {x: Display().width / 2 + 30, y: 0},
+            {x: Display().width / 2 - 10, y: Display().height},
+            {x: Display().width / 2 - 10, y: 0},
         ]
     };
 

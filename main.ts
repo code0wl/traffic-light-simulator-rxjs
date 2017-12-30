@@ -68,8 +68,8 @@ class TrafficLightSimulator {
         new Intersection(this.canvas.context, {
             x: this.verticalRoad.attributes.x,
             y: this.horizontalRoad.attributes.y,
-            width: this.verticalRoad.attributes.width,
-            height: this.horizontalRoad.attributes.height,
+            width: 42,
+            height: 42,
             pavementColor: this.horizontalRoad.pavementColor,
             sideWalkColor: this.horizontalRoad.sideWalkColor
         });

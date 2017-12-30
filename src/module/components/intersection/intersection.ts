@@ -14,24 +14,6 @@ export default class Intersection {
 
     renderLights() {
         new TrafficLight(this.context, {
-            x: this.attributes.x - 9,
-            y: this.attributes.y - 20,
-            position: position.vertical
-        });
-
-        new TrafficLight(this.context, {
-            x: this.attributes.x + 75,
-            y: this.attributes.y - 65,
-            position: position.vertical
-        });
-
-        new TrafficLight(this.context, {
-            x: this.attributes.x + 35,
-            y: this.attributes.y + 20,
-            position: position.horizontal
-        });
-
-        new TrafficLight(this.context, {
             x: this.attributes.x - 10,
             y: this.attributes.y - 63,
             position: position.horizontal
