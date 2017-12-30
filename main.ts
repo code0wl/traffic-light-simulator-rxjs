@@ -33,19 +33,25 @@ class TrafficLightSimulator {
     }
 
     initiateObservers() {
-        const cars$ = Rx.Observable
+        const horizontalLane$ = Rx.Observable
             .interval(this.populateRate)
             .take(this.totalCars)
-            .map(this.carStream);
+            .map(() => this.carStream("horizontal"));
+
+        const verticalLane$ = Rx.Observable
+            .interval(this.populateRate)
+            .take(this.totalCars)
+            .map(() => this.carStream("vertical"));
 
         this.animationLoop
             .animationEngine$
-            .merge(cars$)
+            .merge(verticalLane$)
+            .merge(horizontalLane$)
             .subscribe(this.animate)
     }
 
-    carStream = () => {
-        new Car(this.canvas.context);
+    carStream = (direction: string) => {
+        new Car(this.canvas.context, direction);
     };
 
     assignPaths() {
@@ -114,8 +120,10 @@ class TrafficLightSimulator {
             intersection.render();
         });
 
-        Paths.map((path) => {
-            this.paths.render(path);
+        Object.keys(Paths).map((directionPaths) => {
+            Paths[directionPaths].map((path) => {
+                this.paths.render(path);
+            });
         });
 
         Cars.map((car) => {

@@ -14,16 +14,16 @@ export default class Car {
     private percent: number = 0;
     private currentFrame: Rx.BehaviorSubject<{ percent: number }>;
 
-    constructor(private context: CanvasRenderingContext2D) {
-        this.path = Paths[Math.floor(Math.random() * Paths.length)];
+    constructor(private context: CanvasRenderingContext2D, direction) {
+        this.path = Paths[direction][Math.floor(Math.random() * Paths[direction].length)];
         this.startX = this.path.points[0].x;
         this.startY = this.path.points[0].y;
         this.endX = this.path.points[this.path.points.length - 1].x;
         this.endY = this.path.points[this.path.points.length - 1].y;
         this.width = 40;
         this.height = 15;
-        this.direction = this.path.type === "vertical";
-        this.currentFrame = new Rx.BehaviorSubject({percent: this.percent});
+        this.direction = direction === "vertical";
+        this.currentFrame = new Rx.BehaviorSubject({percent: this.percent, direction: this.direction});
         this.initSubscriptions();
         Cars.push(this);
     }
@@ -35,7 +35,7 @@ export default class Car {
                 const dy = this.endY - this.startY;
                 const x = this.startX + dx * next.percent;
                 const y = this.startY + dy * next.percent;
-                return {x, y, percent: next.percent};
+                return {x, y, percent: next.percent, direction: this.direction};
             })
             .map(coors => {
                 this.context.fillStyle = this.path.stroke;

@@ -6,6 +6,6 @@ import TrafficLight from "../components/traffic_light/traffic_light";
 
 export const Cars: Array<Car> = [];
 export const Roads: Array<Road> = [];
-export const Paths: Array<Path> = [];
+export const Paths: { vertical: Array<Path>, horizontal: Array<Path> } = {vertical: [], horizontal: []};
 export const Intersections: Array<Intersection> = [];
 export const TrafficLights: Array<TrafficLight> = [];
