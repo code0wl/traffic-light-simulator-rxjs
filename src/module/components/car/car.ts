@@ -29,9 +29,6 @@ export default class Car {
     }
 
     initSubscriptions() {
-        const animationCompleted$ = this.currentFrame
-            .filter(x => x.percent >= 1);
-
         this.currentFrame
             .scan((acc: any, next) => {
                 const dx = this.endX - this.startX;
@@ -45,7 +42,7 @@ export default class Car {
                 this.direction ? this.setVerticalDirection(coors) : this.setHorizontalDirection(coors);
                 return coors;
             })
-            .takeUntil(animationCompleted$)
+            .takeWhile(x => x.percent <= 1)
             .subscribe();
     }
 
