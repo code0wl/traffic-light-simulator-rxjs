@@ -42,13 +42,13 @@ class TrafficLightSimulator {
             .interval(this.populateRate)
             .map(() => this.carStream("vertical"));
 
-        this.trafficLights$ = Rx.Observable
+        const trafficLights$ = Rx.Observable
             .interval(5000)
             .startWith(0)
             .scan(acc => acc ? 0 : 1);
 
         const traffic$ = Rx.Observable
-            .merge(this.trafficLights$)
+            .merge(trafficLights$)
             .map(state => {
                 this.trafficLightState = state;
                 return state;
