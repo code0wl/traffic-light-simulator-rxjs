@@ -1,12 +1,13 @@
+import * as Rx from "rxjs";
 import Canvas from "./src/module/engine/canvas/canvas";
 import {Display, iResolution} from "./src/module/engine/display/display";
 import AnimationLoop from "./src/module/engine/animation/animation_engine";
 import Road from "./src/module/components/road/road";
 import Intersection from "./src/module/components/intersection/intersection";
 import Car from "./src/module/components/car/car";
-import {Cars, Intersections, Paths, Roads} from "./src/module/store/store";
-import * as Rx from "rxjs";
 import Path from "./src/module/components/road/path";
+import TrafficLight from "./src/module/components/traffic_light/traffic_light";
+import {Cars, Intersections, Paths, Roads, TrafficLights} from "./src/module/store/store";
 
 class TrafficLightSimulator {
     private canvas: Canvas;
@@ -20,10 +21,15 @@ class TrafficLightSimulator {
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
         this.canvas = new Canvas(this.resolution.width, this.resolution.height);
+        this.initialiseScene();
+        this.initiateObservers();
+    }
+
+    private initialiseScene() {
         this.generateRoads();
         this.assignPaths();
+        this.generateLights();
         this.generateIntersection();
-        this.initiateObservers();
     }
 
     initiateObservers() {
@@ -75,6 +81,28 @@ class TrafficLightSimulator {
         });
     }
 
+    generateLights() {
+        new TrafficLight(this.canvas.context, {
+            x: Display().width / 2 - 80,
+            y: Display().height / 2 - 10,
+        });
+
+        new TrafficLight(this.canvas.context, {
+            x: Display().width / 2 + 40,
+            y: Display().height / 2 - 10,
+        });
+
+        new TrafficLight(this.canvas.context, {
+            x: Display().width / 2 + 40,
+            y: Display().height / 2 - 100,
+        });
+
+        new TrafficLight(this.canvas.context, {
+            x: Display().width / 2 - 80,
+            y: Display().height / 2 - 100,
+        });
+    }
+
     private animate = () => {
         this.canvas.render();
 
@@ -92,6 +120,10 @@ class TrafficLightSimulator {
 
         Cars.map((car) => {
             car.render();
+        });
+
+        TrafficLights.map((light) => {
+            light.render();
         });
     }
 }
