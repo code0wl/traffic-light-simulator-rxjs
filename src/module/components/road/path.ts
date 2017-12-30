@@ -6,6 +6,7 @@ export default class Path {
     private lineWidth: number = 2;
     public paths: Array<any>;
     public stroke: string;
+    public type: string;
     public points: Array<{ x: number, y: number }>;
 
     constructor(private context: CanvasRenderingContext2D) {

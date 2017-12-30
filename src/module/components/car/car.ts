@@ -6,7 +6,7 @@ export default class Car {
     readonly width: number;
     readonly height: number;
     readonly direction: boolean;
-    private path: Path;
+    public path: Path;
     private startX: number;
     private endX: number;
     private endY: number;
@@ -25,7 +25,7 @@ export default class Car {
         this.direction = direction === "vertical";
         this.currentFrame = new Rx.BehaviorSubject({percent: this.percent, direction: this.direction});
         this.initSubscriptions();
-        Cars.push(this);
+        Cars[direction].push(this);
     }
 
     initSubscriptions() {
@@ -54,8 +54,7 @@ export default class Car {
         this.context.fillRect(coors.x, coors.y - (this.height / 2), this.width, this.height);
     }
 
-    render() {
-        this.currentFrame
-            .next({percent: this.percent += .004});
+    public render(speed) {
+        this.currentFrame.next({percent: this.percent += speed});
     }
 }

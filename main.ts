@@ -140,8 +140,16 @@ class TrafficLightSimulator {
             });
         });
 
-        Cars.map((car) => {
-            car.render();
+        Object.keys(Cars).map((directionPaths, index) => {
+            if (index === this.trafficLightState) {
+                Cars[directionPaths].map((car) => {
+                    car.render(.004);
+                });
+            } else {
+                Cars[directionPaths].map((car) => {
+                    car.render(0);
+                });
+            }
         });
 
         TrafficLights.map((light) => {
