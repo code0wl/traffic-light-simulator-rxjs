@@ -56,6 +56,6 @@ export default class Car {
 
     render() {
         this.currentFrame
-            .next({percent: this.percent += .003});
+            .next({percent: this.percent += .004});
     }
 }

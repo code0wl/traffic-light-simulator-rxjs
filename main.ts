@@ -107,20 +107,20 @@ class TrafficLightSimulator {
 
         new TrafficLight(this.canvas.context, {
             type: "vertical",
-            x: Display().width / 2 - 80,
-            y: Display().height / 2 - 100
+            x: Display().width / 2 - 30,
+            y: Display().height / 2 - 80
         });
 
         new TrafficLight(this.canvas.context, {
             type: "vertical",
-            x: Display().width / 2 + 40,
-            y: Display().height / 2 - 10
+            x: Display().width / 2 - 10,
+            y: Display().height / 2 + 40
         });
 
         new TrafficLight(this.canvas.context, {
             type: "horizontal",
             x: Display().width / 2 + 40,
-            y: Display().height / 2 - 100
+            y: Display().height / 2 - 30
         });
     }
 

@@ -16,13 +16,15 @@ export default class TrafficLight {
     }
 
     public render(state) {
-        let showLights
+        let showLights;
         if (this.type === "horizontal") {
             showLights = state ? "green" : "red";
         } else {
             showLights = state ? "red" : "green";
         }
+        this.context.beginPath();
+        this.context.arc(this.attributes.x, this.attributes.y, 7, 0, 2 * Math.PI, false);
         this.context.fillStyle = showLights;
-        this.context.fillRect(this.attributes.x, this.attributes.y, this.width, this.height);
+        this.context.fill();
     }
 }
