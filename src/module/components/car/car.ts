@@ -1,11 +1,12 @@
 import {Cars, Paths} from "../../store/store";
 import * as Rx from "rxjs";
+import Path from "../road/path";
 
 export default class Car {
     readonly width: number;
     readonly height: number;
     readonly color: string;
-    private path: any;
+    private path: Path;
     private startX: number;
     private endX: number;
     private endY: number;
@@ -17,15 +18,14 @@ export default class Car {
         this.path = Paths[Math.floor(Math.random() * Paths.length)];
         this.startX = this.path.points[0].x;
         this.startY = this.path.points[0].y;
-        this.endX = this.path.points[1].x;
-        this.endY = this.path.points[1].y;
+        this.endX = this.path.points[this.path.points.length - 1].x;
+        this.endY = this.path.points[this.path.points.length - 1].y;
         this.color = "#8a0051";
         this.width = 40;
         this.height = 15;
         this.currentFrame = new Rx.BehaviorSubject({percent: this.percent});
         this.initSubscriptions();
         Cars.push(this);
-        console.log(this.path)
     }
 
     initSubscriptions() {
@@ -39,12 +39,18 @@ export default class Car {
             })
             .subscribe((coors) => {
                 this.context.fillStyle = this.color;
+                this.context.save();
+                if (this.path.type === "vertical") {
+                    this.context.translate(coors.x + this.width / 2, coors.y + this.width / 2);
+                    this.context.rotate(90 * Math.PI / 180);
+                }
                 this.context.fillRect(coors.x, coors.y - (this.height / 2), this.width, this.height);
+                this.context.restore();
             });
     }
 
     render() {
         this.currentFrame
-            .next({percent: this.percent += .005});
+            .next({percent: this.percent += .003});
     }
 }

@@ -4,7 +4,10 @@ import {Paths} from "../../store/store";
 export default class Path {
 
     private lineWidth: number = 2;
-    public paths: any;
+    public paths: Array<any>;
+    public stroke: string;
+    public type: string;
+    public points: Array<{ x: number, y: number }>;
 
     constructor(private context: CanvasRenderingContext2D) {
         const paths = Object.keys(allowedPaths());
@@ -14,7 +17,7 @@ export default class Path {
         });
     }
 
-    public render(path) {
+    public render(path: Path) {
         this.context.beginPath();
 
         this.context.moveTo(path.points[0].x, path.points[0].y);
