@@ -15,7 +15,6 @@ class TrafficLightSimulator {
     private horizontalRoad: Road;
     private verticalRoad: Road;
     private populateRate: number = 1000;
-    private trafficLights$: Rx.Observable<number>;
     private paths: any;
     private trafficLightState: number = 0;
 
