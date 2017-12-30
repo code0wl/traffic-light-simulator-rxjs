@@ -14,7 +14,6 @@ class TrafficLightSimulator {
     private resolution: iResolution;
     private horizontalRoad: Road;
     private verticalRoad: Road;
-    private totalCars: number = 100;
     private populateRate: number = 1000;
     private paths: any;
 
@@ -35,18 +34,19 @@ class TrafficLightSimulator {
     initiateObservers() {
         const horizontalLane$ = Rx.Observable
             .interval(this.populateRate)
-            .take(this.totalCars)
             .map(() => this.carStream("horizontal"));
 
         const verticalLane$ = Rx.Observable
             .interval(this.populateRate)
-            .take(this.totalCars)
             .map(() => this.carStream("vertical"));
+
+        const traffic$ = Rx.Observable
+            .of(false)
+            .switchMap(run => run ? horizontalLane$ : verticalLane$);
 
         this.animationLoop
             .animationEngine$
-            .merge(verticalLane$)
-            .merge(horizontalLane$)
+            .merge(traffic$)
             .subscribe(this.animate)
     }
 
