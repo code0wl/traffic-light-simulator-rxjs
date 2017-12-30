@@ -5,7 +5,7 @@ import Path from "../road/path";
 export default class Car {
     readonly width: number;
     readonly height: number;
-    readonly color: string;
+    readonly direction: boolean;
     private path: Path;
     private startX: number;
     private endX: number;
@@ -20,31 +20,41 @@ export default class Car {
         this.startY = this.path.points[0].y;
         this.endX = this.path.points[this.path.points.length - 1].x;
         this.endY = this.path.points[this.path.points.length - 1].y;
-        this.color = "#8a0051";
         this.width = 40;
         this.height = 15;
+        this.direction = this.path.type === "vertical";
         this.currentFrame = new Rx.BehaviorSubject({percent: this.percent});
         this.initSubscriptions();
         Cars.push(this);
     }
 
     initSubscriptions() {
+        const animationCompleted$ = this.currentFrame
+            .filter(x => x.percent >= 1);
+
         this.currentFrame
             .scan((acc: any, next) => {
                 const dx = this.endX - this.startX;
                 const dy = this.endY - this.startY;
                 const x = this.startX + dx * next.percent;
                 const y = this.startY + dy * next.percent;
-                return {x, y};
+                return {x, y, percent: next.percent};
             })
-            .subscribe((coors) => {
-                this.context.fillStyle = this.color;
-                if (this.path.type === "vertical") {
-                    this.context.fillRect(coors.x - (this.height / 2), coors.y, this.height, this.width);
-                } else {
-                    this.context.fillRect(coors.x, coors.y - (this.height / 2), this.width, this.height);
-                }
-            });
+            .map(coors => {
+                this.context.fillStyle = this.path.stroke;
+                this.direction ? this.setVerticalDirection(coors) : this.setHorizontalDirection(coors);
+                return coors;
+            })
+            .takeUntil(animationCompleted$)
+            .subscribe();
+    }
+
+    private setVerticalDirection(coors) {
+        this.context.fillRect(coors.x - (this.height / 2), coors.y, this.height, this.width);
+    }
+
+    private setHorizontalDirection(coors) {
+        this.context.fillRect(coors.x, coors.y - (this.height / 2), this.width, this.height);
     }
 
     render() {
