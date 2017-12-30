@@ -42,7 +42,7 @@ export default class Car {
                 this.context.save();
                 if (this.path.type === "vertical") {
                     this.context.translate(coors.x + this.width / 2, coors.y + this.width / 2);
-                    this.context.rotate(90 * Math.PI / 180);
+                    this.context.rotate(Math.PI / 2);
                 }
                 this.context.fillRect(coors.x, coors.y - (this.height / 2), this.width, this.height);
                 this.context.restore();

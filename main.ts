@@ -14,7 +14,7 @@ class TrafficLightSimulator {
     private horizontalRoad: Road;
     private verticalRoad: Road;
     private totalCars: number = 100;
-    private populateRate: number = 500;
+    private populateRate: number = 1000;
     private paths: any;
 
     constructor(public animationLoop: AnimationLoop) {

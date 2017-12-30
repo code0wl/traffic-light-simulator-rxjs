@@ -31,8 +31,8 @@ export const allowedPaths = () => {
         type: "vertical",
         stroke: "red",
         points: [
-            {x: Display().width / 2 - 30, y: Display().height},
-            {x: Display().width / 2 - 30, y: 0},
+            {x: Display().width / 2 + 30, y: Display().height},
+            {x: Display().width / 2 + 30, y: 0},
         ]
     };
 
