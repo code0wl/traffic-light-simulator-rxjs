@@ -15,7 +15,9 @@ class TrafficLightSimulator {
     private horizontalRoad: Road;
     private verticalRoad: Road;
     private populateRate: number = 1000;
+    private trafficLights$: Rx.Observable<number>;
     private paths: any;
+    private trafficLightState: number = 0;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
@@ -40,9 +42,18 @@ class TrafficLightSimulator {
             .interval(this.populateRate)
             .map(() => this.carStream("vertical"));
 
+        this.trafficLights$ = Rx.Observable
+            .interval(5000)
+            .startWith(0)
+            .scan(acc => acc ? 0 : 1);
+
         const traffic$ = Rx.Observable
-            .of(false)
-            .switchMap(run => run ? horizontalLane$ : verticalLane$);
+            .merge(this.trafficLights$)
+            .map(state => {
+                this.trafficLightState = state;
+                return state;
+            })
+            .switchMap(state => state ? horizontalLane$ : verticalLane$);
 
         this.animationLoop
             .animationEngine$
@@ -89,23 +100,27 @@ class TrafficLightSimulator {
 
     generateLights() {
         new TrafficLight(this.canvas.context, {
+            type: "horizontal",
             x: Display().width / 2 - 80,
-            y: Display().height / 2 - 10,
+            y: Display().height / 2 - 10
         });
 
         new TrafficLight(this.canvas.context, {
-            x: Display().width / 2 + 40,
-            y: Display().height / 2 - 10,
-        });
-
-        new TrafficLight(this.canvas.context, {
-            x: Display().width / 2 + 40,
-            y: Display().height / 2 - 100,
-        });
-
-        new TrafficLight(this.canvas.context, {
+            type: "vertical",
             x: Display().width / 2 - 80,
-            y: Display().height / 2 - 100,
+            y: Display().height / 2 - 100
+        });
+
+        new TrafficLight(this.canvas.context, {
+            type: "vertical",
+            x: Display().width / 2 + 40,
+            y: Display().height / 2 - 10
+        });
+
+        new TrafficLight(this.canvas.context, {
+            type: "horizontal",
+            x: Display().width / 2 + 40,
+            y: Display().height / 2 - 100
         });
     }
 
@@ -131,7 +146,7 @@ class TrafficLightSimulator {
         });
 
         TrafficLights.map((light) => {
-            light.render();
+            light.render(this.trafficLightState);
         });
     }
 }
