@@ -14,7 +14,7 @@ class TrafficLightSimulator {
     private resolution: iResolution;
     private horizontalRoad: Road;
     private verticalRoad: Road;
-    private populateRate: number = 1000;
+    private populateRate: number = 500;
     private paths: any;
     private trafficLightState: number = 0;
 
@@ -42,7 +42,7 @@ class TrafficLightSimulator {
             .map(() => this.carStream("vertical"));
 
         const trafficLights$ = Rx.Observable
-            .interval(5000)
+            .interval(10000)
             .startWith(0)
             .scan(acc => acc ? 0 : 1);
 
@@ -140,16 +140,8 @@ class TrafficLightSimulator {
             });
         });
 
-        Object.keys(Cars).map((directionPaths, index) => {
-            if (index === this.trafficLightState) {
-                Cars[directionPaths].map((car) => {
-                    car.render(.004);
-                });
-            } else {
-                Cars[directionPaths].map((car) => {
-                    car.render(0);
-                });
-            }
+        Cars.map((car) => {
+            car.render(.004);
         });
 
         TrafficLights.map((light) => {
