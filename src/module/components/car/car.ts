@@ -13,7 +13,7 @@ export default class Car {
     private graphic: HTMLImageElement;
     private wireFrame: boolean = false;
     private startY: number;
-    private currentFrame: Rx.BehaviorSubject<{ percent: number, frame: boolean }>;
+    private currentFrame$: Rx.BehaviorSubject<{ percent: number, frame: boolean }>;
 
     constructor(private context: CanvasRenderingContext2D, direction) {
         this.path = Paths[direction][Math.floor(Math.random() * Paths[direction].length)];
@@ -24,7 +24,7 @@ export default class Car {
         this.width = 40;
         this.height = 15;
         this.initGraphic();
-        this.currentFrame = new Rx.BehaviorSubject({percent: this.percent, frame: this.wireFrame});
+        this.currentFrame$ = new Rx.BehaviorSubject({percent: this.percent, frame: this.wireFrame});
         this.initSubscriptions(direction);
         Cars[direction].push(this);
     }
@@ -37,7 +37,7 @@ export default class Car {
     }
 
     initSubscriptions(direction) {
-        this.currentFrame
+        this.currentFrame$
             .scan((acc: any, next) => {
                 const dx = this.endX - this.startX;
                 const dy = this.endY - this.startY;
@@ -56,7 +56,6 @@ export default class Car {
             })
             .takeWhile(x => x.percent <= 1)
             .subscribe();
-
     }
 
     private setVerticalDirectionGraphic(coors) {
@@ -80,6 +79,6 @@ export default class Car {
     }
 
     public render(speed, frame) {
-        this.currentFrame.next({percent: this.percent += speed, frame});
+        this.currentFrame$.next({percent: this.percent += speed, frame});
     }
 }
