@@ -1,6 +1,7 @@
 import {Cars, Paths} from "../../store/store";
 import * as Rx from "rxjs";
 import Path from "../road/path";
+import {Roads} from "../road/model";
 
 export default class Car {
     readonly width: number;
@@ -59,14 +60,24 @@ export default class Car {
     }
 
     private setVerticalDirectionGraphic(coors) {
-        this.context.drawImage(this.graphic, coors.x - (49 / 2), coors.y, 50, 40);
+        const isNorthToSouth = this.path.type === Roads.northToSouth;
+        const angle = isNorthToSouth ? -180 : 0;
+
+        this.context.translate(coors.x, coors.y);
+        this.context.rotate(angle * Math.PI / 180);
+        this.context.translate(-coors.x, -coors.y);
+        this.context.drawImage(this.graphic, coors.x - 25, coors.y, 50, 40);
+        this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
 
     private setHorizontalDirectionGraphic(coors) {
-        this.context.translate(coors.x, coors.y - 25);
-        this.context.rotate(90 * Math.PI / 180);
-        this.context.translate(-coors.x, -coors.y);
-        this.context.drawImage(this.graphic, coors.x, coors.y - 25, 50, 50);
+        const isEastToWest = this.path.type === Roads.eastToWest;
+        const angle = isEastToWest ? -90 : 90;
+        const offset = isEastToWest ? 25 : -25;
+        this.context.translate(coors.x, coors.y + offset);
+        this.context.rotate(angle * Math.PI / 180);
+        this.context.translate(-coors.x, -coors.y + offset);
+        this.context.drawImage(this.graphic, coors.x, coors.y, 50, 50);
         this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
 

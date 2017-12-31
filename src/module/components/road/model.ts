@@ -8,8 +8,16 @@ export interface iRoad {
     type: string;
 }
 
+export enum Roads {
+    eastToWest,
+    westToEast,
+    southToNorth,
+    northToSouth
+}
+
 export const allowedPaths = () => {
     const eastToWest = {
+        type: Roads.eastToWest,
         direction: "horizontal",
         stroke: "blue",
         points: [
@@ -19,6 +27,7 @@ export const allowedPaths = () => {
     };
 
     const westToEast = {
+        type: Roads.westToEast,
         direction: "horizontal",
         stroke: "yellow",
         points: [
@@ -28,6 +37,7 @@ export const allowedPaths = () => {
     };
 
     const southToNorth = {
+        type: Roads.southToNorth,
         direction: "vertical",
         stroke: "white",
         points: [
@@ -37,6 +47,7 @@ export const allowedPaths = () => {
     };
 
     const northToSouth = {
+        type: Roads.northToSouth,
         direction: "vertical",
         stroke: "orange",
         points: [
