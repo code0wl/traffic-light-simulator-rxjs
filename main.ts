@@ -8,6 +8,8 @@ import Car from "./src/module/components/car/car";
 import Path from "./src/module/components/road/path";
 import TrafficLight from "./src/module/components/traffic_light/traffic_light";
 import {Cars, Intersections, Paths, Roads, TrafficLights} from "./src/module/store/store";
+import Control from "./src/module/components/control/control";
+import "./main.css";
 
 class TrafficLightSimulator {
     private canvas: Canvas;
@@ -15,8 +17,9 @@ class TrafficLightSimulator {
     private horizontalRoad: Road;
     private verticalRoad: Road;
     private populateRate: number = 500;
-    private paths: any;
+    private path: Path;
     private trafficLightState: number = 0;
+    public controls: Control;
 
     constructor(public animationLoop: AnimationLoop) {
         this.resolution = Display();
@@ -30,9 +33,14 @@ class TrafficLightSimulator {
         this.assignPaths();
         this.generateLights();
         this.generateIntersection();
+        this.generateControls();
     }
 
-    initiateObservers() {
+    private generateControls() {
+        this.controls = new Control();
+    }
+
+    private initiateObservers() {
         const horizontalLane$ = Rx.Observable
             .interval(this.populateRate)
             .map(() => this.carStream("horizontal"));
@@ -65,7 +73,7 @@ class TrafficLightSimulator {
     };
 
     assignPaths() {
-        this.paths = new Path(this.canvas.context);
+        this.path = new Path(this.canvas.context);
     }
 
     generateRoads() {
@@ -135,8 +143,8 @@ class TrafficLightSimulator {
         });
 
         Object.keys(Paths).map((directionPaths) => {
-            Paths[directionPaths].map((path) => {
-                this.paths.render(path);
+            Paths[directionPaths].map((path: Path) => {
+                this.path.render(path, this.controls.wireframeView);
             });
         });
 

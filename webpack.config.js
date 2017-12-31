@@ -17,9 +17,15 @@ module.exports = {
         filename: "[name].js"
     },
     module: {
-        loaders: [{
-            test: /.ts$/,
-            loader: "ts-loader"
-        }]
+        rules: [
+            {
+                test: /.ts$/,
+                loader: "ts-loader"
+            },
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
+            }
+        ]
     }
 };
