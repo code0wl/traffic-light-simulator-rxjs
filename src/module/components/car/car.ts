@@ -64,9 +64,9 @@ export default class Car {
     }
 
     private setHorizontalDirectionGraphic(coors) {
-        this.context.translate(coors.x, coors.y - 25);    // translate to center of rotation
-        this.context.rotate(90 * Math.PI / 180); // rotate, here +90deg to comp image dir.
-        this.context.translate(-coors.x, -coors.y);  // translate back
+        this.context.translate(coors.x, coors.y - 25);
+        this.context.rotate(90 * Math.PI / 180);
+        this.context.translate(-coors.x, -coors.y);
         this.context.drawImage(this.graphic, coors.x, coors.y - 25, 50, 50);
         this.context.setTransform(1, 0, 0, 1, 0, 0);
     }
