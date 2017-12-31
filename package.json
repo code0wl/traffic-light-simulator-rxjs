@@ -19,10 +19,12 @@
     "node": ">= 8"
   },
   "scripts": {
-    "start": " npm i && webpack-dev-server"
+    "dev": "concurrently \"webpack -w\" \"webpack-dev-server\"",
+    "start": "npm i && npm run dev"
   },
   "devDependencies": {
     "@types/rx": "^4.1.1",
+    "concurrently": "^3.5.1",
     "css-loader": "^0.28.7",
     "file-loader": "^1.1.6",
     "style-loader": "^0.19.1",

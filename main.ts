@@ -149,11 +149,11 @@ class TrafficLightSimulator {
 
         Object.keys(Cars).map((directionPaths, index) => {
             Cars[directionPaths].map(car => {
-                if (this.trafficLightState === index || car.percent >= .45) {
-                    car.render(.004);
+                if (this.trafficLightState === index || car.percent > .36) {
+                    car.render(.004, this.controls.wireframeView);
                 } else {
                     // calc if car did not pass the intersection yet
-                    car.render(0);
+                    car.render(0, this.controls.wireframeView);
                 }
             });
         });
