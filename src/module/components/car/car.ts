@@ -25,7 +25,7 @@ export default class Car {
         this.direction = direction === "vertical";
         this.currentFrame = new Rx.BehaviorSubject({percent: this.percent, direction: this.direction});
         this.initSubscriptions();
-        Cars.push(this);
+        Cars[direction].push(this);
     }
 
     initSubscriptions() {
