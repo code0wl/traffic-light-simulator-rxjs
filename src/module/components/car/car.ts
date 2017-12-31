@@ -53,6 +53,9 @@ export default class Car {
     }
 
     public render(speed) {
+        const img = new Image();
+        img.src = "http://localhost:4200/assets/1.png";
+        this.context.drawImage(img, 10, 10);
         this.currentFrame.next({percent: this.percent += speed});
     }
 }

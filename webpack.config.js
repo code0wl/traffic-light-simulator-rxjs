@@ -5,16 +5,16 @@ module.exports = {
     resolve: {
         extensions: [".js", ".ts"]
     },
+    output: {
+        path: "/src/assets/",
+        publicPath: "/assets/"
+    },
     devtool: "inline-source-map",
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
-        port: 3000,
+        contentBase: path.join(__dirname, "/dist"),
+        port: 4200,
         open: true,
         compress: true
-    },
-    output: {
-        path: path.resolve("./dist"),
-        filename: "[name].js"
     },
     module: {
         rules: [
@@ -27,11 +27,13 @@ module.exports = {
                 use: ["style-loader", "css-loader"]
             },
             {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                use: [
-                    "url-loader?limit=10000",
-                    "img-loader"
-                ]
+                test: /\.(png|jpg|gif)$/,
+                use: [{
+                    loader: "file-loader",
+                    options: {
+                        name: "[path][name].[ext]"
+                    }
+                }]
             }
         ]
     }
