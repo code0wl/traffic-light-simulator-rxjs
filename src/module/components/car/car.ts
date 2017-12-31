@@ -11,7 +11,7 @@ export default class Car {
     private endX: number;
     private endY: number;
     private startY: number;
-    private percent: number = 0;
+    public percent: number = 0;
     private currentFrame: Rx.BehaviorSubject<{ percent: number }>;
 
     constructor(private context: CanvasRenderingContext2D, direction) {

@@ -18,6 +18,7 @@ class TrafficLightSimulator {
     private verticalRoad: Road;
     private populateRate: number = 500;
     private path: Path;
+    private intersection: Intersection;
     private trafficLightState: number = 0;
     public controls: Control;
 
@@ -95,13 +96,11 @@ class TrafficLightSimulator {
     }
 
     generateIntersection() {
-        new Intersection(this.canvas.context, {
+        this.intersection = new Intersection(this.canvas.context, {
             x: this.verticalRoad.attributes.x,
             y: this.horizontalRoad.attributes.y,
             width: 42,
-            height: 42,
-            pavementColor: this.horizontalRoad.pavementColor,
-            sideWalkColor: this.horizontalRoad.sideWalkColor
+            height: 42
         });
     }
 
@@ -150,9 +149,10 @@ class TrafficLightSimulator {
 
         Object.keys(Cars).map((directionPaths, index) => {
             Cars[directionPaths].map(car => {
-                if (this.trafficLightState === index) {
+                if (this.trafficLightState === index || car.percent >= .4) {
                     car.render(.004);
                 } else {
+                    // calc if car did not pass the intersection yet
                     car.render(0);
                 }
             });
