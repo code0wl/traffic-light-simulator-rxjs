@@ -29,7 +29,7 @@ export const allowedPaths = () => {
 
     const southToNorth = {
         direction: "vertical",
-        stroke: "red",
+        stroke: "white",
         points: [
             {x: Display().width / 2 - 10, y: Display().height},
             {x: Display().width / 2 - 10, y: 0},
