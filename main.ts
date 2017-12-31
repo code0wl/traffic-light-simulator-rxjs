@@ -42,7 +42,7 @@ class TrafficLightSimulator {
             .map(() => this.carStream("vertical"));
 
         const trafficLights$ = Rx.Observable
-            .interval(10000)
+            .interval(5000)
             .startWith(0)
             .scan(acc => acc ? 0 : 1);
 
