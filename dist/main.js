@@ -25972,7 +25972,7 @@ exports.allowedPaths = () => {
     };
     const southToNorth = {
         direction: "vertical",
-        stroke: "red",
+        stroke: "white",
         points: [
             { x: display_1.Display().width / 2 - 10, y: display_1.Display().height },
             { x: display_1.Display().width / 2 - 10, y: 0 },
