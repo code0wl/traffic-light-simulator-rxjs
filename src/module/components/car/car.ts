@@ -5,7 +5,6 @@ import Path from "../road/path";
 export default class Car {
     readonly width: number;
     readonly height: number;
-    readonly direction: string;
     public path: Path;
     private startX: number;
     private endX: number;
@@ -22,13 +21,12 @@ export default class Car {
         this.endY = this.path.points[this.path.points.length - 1].y;
         this.width = 40;
         this.height = 15;
-        this.direction = direction;
         this.currentFrame = new Rx.BehaviorSubject({percent: this.percent});
-        this.initSubscriptions();
+        this.initSubscriptions(direction);
         Cars[direction].push(this);
     }
 
-    initSubscriptions() {
+    initSubscriptions(direction) {
         this.currentFrame
             .scan((acc: any, next) => {
                 const dx = this.endX - this.startX;
@@ -39,7 +37,7 @@ export default class Car {
             })
             .map(coors => {
                 this.context.fillStyle = this.path.stroke;
-                this.direction === "vertical" ? this.setVerticalDirection(coors) : this.setHorizontalDirection(coors);
+                direction === "vertical" ? this.setVerticalDirection(coors) : this.setHorizontalDirection(coors);
                 return coors;
             })
             .takeWhile(x => x.percent <= 1)
