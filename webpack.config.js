@@ -5,10 +5,6 @@ module.exports = {
     resolve: {
         extensions: [".js", ".ts"]
     },
-    output: {
-        path: "/src/assets/",
-        publicPath: "/assets/"
-    },
     devtool: "inline-source-map",
     devServer: {
         contentBase: path.join(__dirname, "/dist"),
