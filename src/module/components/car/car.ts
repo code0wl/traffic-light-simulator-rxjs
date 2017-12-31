@@ -46,8 +46,8 @@ export default class Car {
                 return {x, y, percent: next.percent, frame: next.frame};
             })
             .map(coors => {
-                this.context.fillStyle = this.path.stroke;
                 if (coors.frame) {
+                    this.context.fillStyle = this.path.stroke;
                     direction === "vertical" ? this.setVerticalDirection(coors) : this.setHorizontalDirection(coors);
                 } else {
                     direction === "vertical" ? this.setVerticalDirectionGraphic(coors) : this.setHorizontalDirectionGraphic(coors);
