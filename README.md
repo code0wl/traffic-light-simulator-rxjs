@@ -2,7 +2,10 @@
 
 Use this playground to quickly scaffold a rxjs program
 
-# Usage 
+## Usage 
+
+Ensure you have node 8 or later
+
 ```bash
 $ npm start
 ```
