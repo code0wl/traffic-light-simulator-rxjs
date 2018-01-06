@@ -56,7 +56,7 @@ export default class Car {
                 }
                 return coors;
             })
-            .takeWhile(x => x.percent <= 1)
+            .takeWhile(car => car.percent <= 1)
             .subscribe();
     }
 

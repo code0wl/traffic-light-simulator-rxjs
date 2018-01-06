@@ -55,8 +55,7 @@ class TrafficLightSimulator {
             .startWith(0)
             .scan(acc => acc ? 0 : 1);
 
-        const traffic$ = Rx.Observable
-            .merge(trafficLights$)
+        const traffic$ = trafficLights$
             .map(state => {
                 this.trafficLightState = state;
                 return state;
