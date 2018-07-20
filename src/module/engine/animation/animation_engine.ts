@@ -1,8 +1,9 @@
-import * as Rx from "rxjs";
+import { Observable, of } from "../../../../node_modules/rxjs";
+import { animationFrame } from "../../../../node_modules/rxjs/internal/scheduler/animationFrame";
+import { repeat } from "../../../../node_modules/rxjs/operators";
 
 export default class AnimationLoop {
-    public animationEngine$: Rx.Observable<number> = Rx.Observable
-        .of(0, Rx.Scheduler.animationFrame)
-        .share()
-        .repeat()
+  public animationEngine$: Observable<number> = of(0, animationFrame).pipe(
+    repeat()
+  );
 }
