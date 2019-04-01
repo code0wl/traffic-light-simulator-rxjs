@@ -1,7 +1,7 @@
 import { Cars, Paths } from "../../store/store";
 import Path from "../road/path";
 import { Roads } from "../road/model";
-import { scan, map, takeWhile, filter } from "rxjs/operators";
+import { scan, map, takeWhile } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
 
 export default class {
@@ -60,9 +60,7 @@ export default class {
             x,
             y,
             percent: next.percent,
-            frame: Boolean(next.frame),
-            id: Cars[direction].length,
-            complete: false
+            frame: Boolean(next.frame)
           };
         }),
         map(coors => {
@@ -79,12 +77,7 @@ export default class {
           }
           return coors;
         }),
-        takeWhile(car => car.percent <= 1),
-        filter(c => c.percent === 1),
-        map(c => {
-          c.complete = true;
-          return c;
-        })
+        takeWhile(({ percent }) => percent <= 1)
       )
       .subscribe();
   }
@@ -129,11 +122,10 @@ export default class {
     );
   }
 
-  public render(speed, frame, complete?) {
+  public render(speed, frame) {
     this.currentFrame$.next({
       percent: this.percent += speed,
-      frame,
-      complete
+      frame
     });
   }
 }

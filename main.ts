@@ -158,8 +158,6 @@ class TrafficLightSimulator {
     this.cars = Object.keys(Cars).map(directionPaths =>
       Cars[directionPaths].filter(car => car.percent < 1)
     );
-
-    console.log(this.cars);
   }
 
   stop(car: Car) {
