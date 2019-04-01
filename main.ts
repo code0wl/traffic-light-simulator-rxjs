@@ -23,20 +23,23 @@ import {
   switchMap,
   merge
 } from "./node_modules/rxjs/operators";
+import { hasIntersect } from "./src/module/engine/collision/collision";
 
 class TrafficLightSimulator {
   private canvas: Canvas;
   private resolution: iResolution;
   private horizontalRoad: Road;
   private verticalRoad: Road;
-  private populateRate: number = 500;
+  private populateRateThrottle: number = 500;
   private path: Path;
   private intersection: Intersection;
   private trafficLightState: number = 0;
   public controls: Control;
+  private cars;
 
   constructor(public animationLoop: AnimationLoop) {
     this.resolution = Display();
+    this.cars = Cars;
     this.canvas = new Canvas(this.resolution.width, this.resolution.height);
     this.initialiseScene();
     this.initiateObservers();
@@ -45,7 +48,7 @@ class TrafficLightSimulator {
   private initialiseScene() {
     this.generateRoads();
     this.assignPaths();
-    this.generateLights();
+    this.generateLights(this.canvas.context);
     this.generateIntersection();
     this.generateControls();
   }
@@ -55,11 +58,11 @@ class TrafficLightSimulator {
   }
 
   private initiateObservers() {
-    const horizontalLane$ = interval(this.populateRate).pipe(
+    const horizontalLane$ = interval(this.populateRateThrottle).pipe(
       map(() => this.carStream("horizontal"))
     );
 
-    const verticalLane$ = interval(this.populateRate).pipe(
+    const verticalLane$ = interval(this.populateRateThrottle).pipe(
       map(() => this.carStream("vertical"))
     );
 
@@ -116,64 +119,89 @@ class TrafficLightSimulator {
     });
   }
 
-  generateLights() {
-    new TrafficLight(this.canvas.context, {
-      type: "horizontal",
-      x: Display().width / 2 - 80,
-      y: Display().height / 2 - 10
-    });
-
-    new TrafficLight(this.canvas.context, {
-      type: "vertical",
-      x: Display().width / 2 - 30,
-      y: Display().height / 2 - 80
-    });
-
-    new TrafficLight(this.canvas.context, {
-      type: "vertical",
-      x: Display().width / 2 - 10,
-      y: Display().height / 2 + 40
-    });
-
-    new TrafficLight(this.canvas.context, {
-      type: "horizontal",
-      x: Display().width / 2 + 40,
-      y: Display().height / 2 - 30
+  generateLights(canvas) {
+    [
+      {
+        type: "horizontal",
+        x: Display().width / 2 - 80,
+        y: Display().height / 2 - 10
+      },
+      {
+        type: "vertical",
+        x: Display().width / 2 - 30,
+        y: Display().height / 2 - 80
+      },
+      {
+        type: "vertical",
+        x: Display().width / 2 - 10,
+        y: Display().height / 2 + 40
+      },
+      {
+        type: "horizontal",
+        x: Display().width / 2 + 40,
+        y: Display().height / 2 - 30
+      }
+    ].forEach(light => {
+      new TrafficLight(canvas, light);
     });
   }
 
+  fullSpeed(car: Car) {
+    car.render(0.004, this.controls.wireframeView);
+  }
+
+  slowSpeed(car: Car) {
+    car.render(0.002, this.controls.wireframeView);
+  }
+
+  garbageCollect() {
+    this.cars = Object.keys(Cars).map(directionPaths =>
+      Cars[directionPaths].filter(car => car.percent < 1)
+    );
+
+    console.log(this.cars);
+  }
+
+  stop(car: Car) {
+    if (car) {
+      car.render(0, this.controls.wireframeView);
+    }
+  }
+
   private animate = () => {
+    this.garbageCollect();
+    if (this.controls.pause) {
+      return;
+    }
+
     this.canvas.render();
 
-    Roads.map(road => {
-      road.render();
-    });
+    Roads.map(road => road.render());
 
-    Intersections.map(intersection => {
-      intersection.render();
-    });
+    Intersections.map(intersection => intersection.render());
 
-    Object.keys(Paths).map(directionPaths => {
-      Paths[directionPaths].map((path: Path) => {
-        this.path.render(path, this.controls.wireframeView);
-      });
-    });
+    Object.keys(Paths).map(directionPaths =>
+      Paths[directionPaths].map((path: Path) =>
+        this.path.render(path, this.controls.wireframeView)
+      )
+    );
 
-    Object.keys(Cars).map((directionPaths, index) => {
-      Cars[directionPaths].map(car => {
+    this.cars.map((directionPaths, index) =>
+      directionPaths.map(car => {
         if (this.trafficLightState === index) {
-          car.render(0.004, this.controls.wireframeView);
+          this.fullSpeed(car);
         } else {
           if (car.percent > 0.4) {
-            car.render(0.004, this.controls.wireframeView);
+            this.fullSpeed(car);
           } else if (car.percent < 0.39) {
-            car.render(0.001, this.controls.wireframeView);
+            this.slowSpeed(car);
+            // this.stop(hasIntersect(Cars[directionPaths], car.percent));
           } else {
-            car.render(0, this.controls.wireframeView);
+            this.stop(car);
           }
         }
-      });
-    });
+      })
+    );
 
     TrafficLights.map(light => {
       light.render(this.trafficLightState);

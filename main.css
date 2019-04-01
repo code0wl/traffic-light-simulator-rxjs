@@ -1,13 +1,19 @@
 .view-controls {
-    z-index: 1;
-    background: #333;
-    color: white;
-    position: absolute;
-    top: 0;
-    padding: 1rem;
-    left: 0;
+  z-index: 1;
+  background: #333;
+  color: white;
+  position: absolute;
+  top: 0;
+  text-align: left;
+  padding: 1rem;
+  left: 0;
 }
 
 input {
-    float: left;
+  width: 10%;
+  float: left;
+}
+
+label {
+  display: inline-block;
 }

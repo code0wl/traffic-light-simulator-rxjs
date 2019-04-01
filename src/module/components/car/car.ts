@@ -1,10 +1,10 @@
 import { Cars, Paths } from "../../store/store";
 import Path from "../road/path";
 import { Roads } from "../road/model";
-import { scan, map, takeWhile } from "rxjs/operators";
+import { scan, map, takeWhile, filter } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
 
-export default class Car {
+export default class {
   readonly width: number;
   readonly height: number;
   public path: Path;
@@ -18,9 +18,10 @@ export default class Car {
   private currentFrame$: BehaviorSubject<{
     percent: number;
     frame: boolean;
+    complete?: boolean;
   }>;
 
-  constructor(private context: CanvasRenderingContext2D, direction) {
+  constructor(private context: CanvasRenderingContext2D, direction: string) {
     this.path =
       Paths[direction][Math.floor(Math.random() * Paths[direction].length)];
     this.startX = this.path.points[0].x;
@@ -32,7 +33,8 @@ export default class Car {
     this.initGraphic();
     this.currentFrame$ = new BehaviorSubject({
       percent: this.percent,
-      frame: this.wireFrame
+      frame: this.wireFrame,
+      complete: false
     });
     this.initSubscriptions(direction);
     Cars[direction].push(this);
@@ -45,17 +47,23 @@ export default class Car {
     this.graphic.width = this.width;
   }
 
-  initSubscriptions(direction) {
+  initSubscriptions(direction: string) {
     this.currentFrame$
       .pipe(
-        scan((acc, next) => {
-          
+        scan((_, next) => {
           const dx = this.endX - this.startX;
           const dy = this.endY - this.startY;
           const x = this.startX + dx * next.percent;
           const y = this.startY + dy * next.percent;
 
-          return { x, y, percent: next.percent, frame: next.frame };
+          return {
+            x,
+            y,
+            percent: next.percent,
+            frame: Boolean(next.frame),
+            id: Cars[direction].length,
+            complete: false
+          };
         }),
         map(coors => {
           const d = direction === "vertical";
@@ -71,7 +79,12 @@ export default class Car {
           }
           return coors;
         }),
-        takeWhile(car => car.percent <= 1)
+        takeWhile(car => car.percent <= 1),
+        filter(c => c.percent === 1),
+        map(c => {
+          c.complete = true;
+          return c;
+        })
       )
       .subscribe();
   }
@@ -116,7 +129,11 @@ export default class Car {
     );
   }
 
-  public render(speed, frame) {
-    this.currentFrame$.next({ percent: (this.percent += speed), frame });
+  public render(speed, frame, complete?) {
+    this.currentFrame$.next({
+      percent: this.percent += speed,
+      frame,
+      complete
+    });
   }
 }
