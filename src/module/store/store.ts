@@ -6,7 +6,17 @@ import TrafficLight from "../components/traffic_light/traffic_light";
 
 // controls
 export const Roads: Array<Road> = [];
-export const Paths: { vertical: Array<Path>, horizontal: Array<Path> } = {vertical: [], horizontal: []};
-export const Cars: { vertical: Array<Car>, horizontal: Array<Car> } = {vertical: [], horizontal: []};
+export const Paths: { vertical: Array<Path>; horizontal: Array<Path> } = {
+  vertical: [],
+  horizontal: []
+};
+export let Cars: { vertical: Array<Car>; horizontal: Array<Car> } = {
+  vertical: [],
+  horizontal: []
+};
 export const Intersections: Array<Intersection> = [];
 export const TrafficLights: Array<TrafficLight> = [];
+
+export const resetStore = () => {
+  Cars = { vertical: [], horizontal: [] };
+};

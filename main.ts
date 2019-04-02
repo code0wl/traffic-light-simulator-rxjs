@@ -166,6 +166,12 @@ class TrafficLightSimulator {
     }
   }
 
+  park(car: Car) {
+    if (car) {
+    }
+    //   car.render(0, this.controls.wireframeView);
+  }
+
   private animate = () => {
     this.garbageCollect();
     if (this.controls.pause) {
@@ -192,8 +198,8 @@ class TrafficLightSimulator {
           if (car.percent > 0.4) {
             this.fullSpeed(car);
           } else if (car.percent < 0.39) {
+            this.park(hasIntersect(directionPaths, car.percent));
             this.slowSpeed(car);
-            // this.stop(hasIntersect(Cars[directionPaths], car.percent));
           } else {
             this.stop(car);
           }

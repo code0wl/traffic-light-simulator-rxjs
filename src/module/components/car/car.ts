@@ -11,6 +11,8 @@ export default class {
   public percent: number = 0;
   private startX: number;
   private endX: number;
+  public positionX;
+  public positionY;
   private endY: number;
   private graphic: HTMLImageElement;
   private wireFrame: boolean = false;
@@ -55,6 +57,9 @@ export default class {
           const dy = this.endY - this.startY;
           const x = this.startX + dx * next.percent;
           const y = this.startY + dy * next.percent;
+
+          this.positionY = y;
+          this.positionX = x
 
           return {
             x,
