@@ -23,7 +23,7 @@ import {
   switchMap,
   merge
 } from "./node_modules/rxjs/operators";
-import { hasIntersect } from "./src/module/engine/collision/collision";
+// import { hasIntersect } from "./src/module/engine/collision/collision";
 
 class TrafficLightSimulator {
   private canvas: Canvas;
@@ -161,13 +161,12 @@ class TrafficLightSimulator {
   }
 
   stop(car: Car) {
-    if (car) {
-      car.render(0, this.controls.wireframeView);
-    }
+    car.render(0, this.controls.wireframeView);
   }
 
   park(car: Car) {
     if (car) {
+      console.log(car);
     }
     //   car.render(0, this.controls.wireframeView);
   }
@@ -198,7 +197,7 @@ class TrafficLightSimulator {
           if (car.percent > 0.4) {
             this.fullSpeed(car);
           } else if (car.percent < 0.39) {
-            this.park(hasIntersect(directionPaths, car.percent));
+            // this.park(hasIntersect(directionPaths, car.percent));
             this.slowSpeed(car);
           } else {
             this.stop(car);
